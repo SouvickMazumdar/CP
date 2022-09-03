@@ -1,0 +1,39 @@
+//https://codeforces.com/problemset/problem/4/C
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<ll> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+
+int main() {
+ ll t;
+ cin>>t;
+ map<string, ll> mp;
+ while(t--)
+ {
+    string st;
+    cin>>st;
+    if(mp.find(st)!=mp.end())
+    {
+        ll count=mp[st];
+        mp[st]++;
+        string g=st+to_string(count);
+        mp.insert({g,0});
+        cout<<g<<endl;
+    }
+    else
+    {
+         mp.insert({st,1});
+         
+         cout<<"OK\n";
+    }
+ }
+    return 0;  
+
+}
