@@ -1,0 +1,115 @@
+// ***************************************************** MY CODE USING VECTOR AND MAP ***********************************************
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<ll> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+
+
+bool comp1(pair<int,int>el1,pair<int,int>el2)
+{
+    if(el1.second<el2.second)
+    {
+        return true;
+    }
+   else
+    return false;
+}
+
+int main() {
+ll t;
+cin>>t;
+while(t--)
+{
+ ll n,m,sum=0;
+ cin>>n>>m;
+ map<ll,ll> mp;
+ vector<pair<ll,ll>> v;
+ 
+ for(int i=0;i<m;i++)
+ {
+     ll x,w;
+     cin>>x>>w;
+     mp[x]=i+1;
+     v.push_back(make_pair(x,w));
+ }
+ ll r=2*n;
+ sort(v.begin(),v.end(),comp1);
+ ll rem=m-r;
+ for(ll k=0;k<rem;k++)
+ {
+     v.pop_back();
+ }
+ sort(v.begin(),v.end());
+ 
+ for(ll t=0;t<n;t++)
+ {
+     sum+=v[t].second+v[r-t-1].second;
+ }
+ cout<<sum<<endl;
+ for(ll i=0;i<n;i++)
+ {
+     ll k=v[i].first;ll t=v[r-i-1].first;
+     cout<<mp[k]<<" "<<mp[t]<<endl;
+ }   
+}
+  return 0;  
+}
+
+
+// ***************************************************** TUTOR'S CODE USING STRUCTURE AND INLINE COMPARATOR ***********************************************
+
+#include<bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+#define forn(i, n) for (int i = 0; i < int(n); i++)
+
+struct point{
+    int weight, position, id;
+};
+
+void solve(){
+    int n, m;
+    cin >> n >> m;
+    vector<point>points(m);
+
+    forn(i, m) {
+        cin >>  points[i].position >> points[i].weight;
+        points[i].id = i + 1;
+    }
+
+    sort(points.begin(), points.end(), [] (point a, point b){
+        return a.weight < b.weight;
+    });
+
+    int sum = 0;
+    forn(i, m){
+        if(i < 2 * n) sum += points[i].weight;
+        else points.pop_back();
+    }
+
+    sort(points.begin(), points.end(), [] (point a, point b){
+        return a.position < b.position;
+    });
+
+    cout << sum << endl;
+    forn(i, n){
+        cout << points[i].id << ' ' << points[2 * n - i - 1].id << endl;
+    }
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while(t--){
+        solve();
+    }
+    return 0;
+}
