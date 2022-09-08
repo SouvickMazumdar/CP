@@ -30,7 +30,8 @@ public:
  
  
  
- // Now using hashing....using list to handle collision
+ // ####################################Now using hashing....using list to handle collision
+ //LIST DON'T USE CONTIGUOS MEMORY LOCATION....IT IS JUST LIKE DOUBLY LINKED LIST
  
  class MyHashSet {
 public:
