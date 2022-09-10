@@ -1,0 +1,33 @@
+//https://www.codechef.com/SEP221D/problems/EQPAIR
+#include <bits/stdc++.h>
+#define ll long long int
+using namespace std;
+
+int main() {
+	// your code goes here
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+	    ll n;
+	    cin>>n;
+	    map<ll,ll>mp;
+	    for(ll i=0;i<n;i++)
+	    {
+	        ll a;
+	        cin>>a;
+	        mp[a]++;
+	    }
+	    ll sum=0;
+	    for(auto it: mp)
+	    {
+	        if(it.second>1)
+	        {
+	            sum+=(it.second*(it.second-1))/2;
+	        }
+	        
+	    }
+	    cout<<sum<<endl;
+	}
+	return 0;
+}
