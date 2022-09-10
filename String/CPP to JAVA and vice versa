@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+char* func(char *s,int t)
+{
+    int n=sizeof(s)/sizeof(s[0]);
+    string k="";int count=0;
+    if(t==1)
+    {
+        for(int i=0;i<n;i++)
+        {
+            if(s[i]=='_' && count==0)continue;
+            if(s[i]!='_' && count==0){k=k+s[i];count=1;}
+            else
+            {
+                char ar;
+                if(s[i]=='' && i+1<n && s[i+1]!='')
+                {
+                    ar=toupper(s[i+1]);
+                    k=k+ar;i++;
+                }
+                else if(s[i]!='_')k=k+s[i];
+            }
+        }
+    }
+    else
+    {
+        for(int i=0;i<n;i++)
+        {
+            if(s[i]<97)
+            {
+                char gh=tolower(s[i]);
+                k=k+'_'+gh;
+            }
+            else
+            k=k+s[i];
+        }
+    }
+    char ar[k.size()];
+    for(int i=0;i<k.size();i++)
+    ar[i]=k[i];
+    return ar;
+}
+int main()
+{
+string a="thisIsAVariable";
+char ch[a.size()];int t=0;
+for(int i=0;i<a.size();i++)
+{
+  ch[i]=a[i];
+  if(a[i]=='_')t=1;
+}
+
+char ar*=func(ch,t);
+int m=sizeof(ar)/sizeof(ar[0]);
+for(int i=0;i<m;i++)
+{
+
+  cout<<ar[i];
+}
+return 0;
+}
