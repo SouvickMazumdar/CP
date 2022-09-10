@@ -1,0 +1,23 @@
+//https://www.geeksforgeeks.org/check-destination-reachable-source-two-movements-allowed/
+#include <bits/stdc++.h>
+
+using namespace std;
+bool recursion(int lim_x, int lim_y ,int x,int y,int tar_x,int tar_y)
+{
+    if(x==tar_x && y==tar_y)
+    return true;
+    if(x>=lim_x || y>=lim_y)
+    return false;
+    cout<<x<<" "<<y<<endl;
+    
+    return recursion(lim_x,lim_y,x,x+y,tar_x,tar_y)||recursion(lim_x,lim_y,x+y,x,tar_x,tar_y);
+}
+
+int main()
+{
+   
+   int m=4,n=4;
+   int start_x=1,start_y=1,end_x=2,end_y=3;
+   cout<<"\n"<<recursion(m,n,start_x,start_y,end_x,end_y);
+    return 0;
+}
