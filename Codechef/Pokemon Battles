@@ -1,0 +1,147 @@
+//https://www.codechef.com/SEP221D/problems/PBATTLE
+#include <bits/stdc++.h>
+#define ll long long int
+using namespace std;
+
+void _mergeSort(ll arr[], ll temp[], ll left, ll right,unordered_map<ll,ll> &mp);
+void merge(ll arr[], ll temp[], ll left, ll mid,
+          ll right,unordered_map<ll,ll> &mp);
+  
+/* This function sorts the
+   input array and returns the
+number of inversions in the array */
+void mergeSort(ll arr[], ll array_size, unordered_map<ll,ll> &mp)
+{
+    ll temp[array_size];
+    _mergeSort(arr, temp, 0, array_size - 1,mp);
+}
+  
+/* An auxiliary recursive function
+  that sorts the input array and
+returns the number of inversions in the array. */
+void _mergeSort(ll arr[], ll temp[], ll left, ll right,unordered_map<ll,ll> &mp)
+{
+    ll mid;
+    if (right > left) {
+        /* Divide the array into two parts and
+        call _mergeSortAndCountInv()
+        for each of the parts */
+        mid = (right + left) / 2;
+  
+        /* Inversion count will be sum of
+        inversions in left-part, right-part
+        and number of inversions in merging */
+         _mergeSort(arr, temp, left, mid, mp);
+         _mergeSort(arr, temp, mid + 1, right, mp);
+  
+        /*Merge the two parts*/
+         merge(arr, temp, left, mid + 1, right, mp);
+    }
+  
+}
+  
+/* This function merges two sorted arrays
+and returns inversion count in the arrays.*/
+void merge(ll arr[], ll temp[], ll left, ll mid,
+          ll right,unordered_map<ll,ll> &mp)
+{
+   ll i, j, k;
+    ll inv_count = 0;
+  
+    i = left; /* i is index for left subarray*/
+    j = mid; /* j is index for right subarray*/
+    k = left; /* k is index for resultant merged subarray*/
+    ll sum=0;
+    while ((i <= mid - 1) && (j <= right)) {
+        if (arr[i] <= arr[j]) {
+            temp[k++] = arr[i++];
+            //mp[arr[j]]+=mp[arr[i-1]]+1;
+            //sum+=mp[arr[j]];
+            //cout<<mp[arr[j]]<<"\n";
+        }
+        else {
+             temp[k++] = arr[j];
+             if(i!=0)
+             mp[arr[j]]+=i-left;
+            j++;
+            /* this is tricky -- see above
+            explanation/diagram for merge()*/
+            //inv_count = inv_count + (mid - i);
+        }
+        //cout<<mp[arr[i]]<<":"<<mp[arr[j]]<<endl;
+    }
+  
+    /* Copy the remaining elements of left subarray
+(if there are any) to temp*/
+    while (i <= mid - 1)
+        temp[k++] = arr[i++];
+  
+    /* Copy the remaining elements of right subarray
+       (if there are any) to temp*/
+    while (j <= right)
+        {temp[k++] = arr[j++];mp[arr[j-1]]+=i-left;}
+  
+    /*Copy back the merged elements to original array*/
+    for (i = left; i <= right; i++)
+        arr[i] = temp[i];
+  
+}
+int main() {
+	// your code goes heres
+    
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        priority_queue<pair<ll,ll>> pq;
+        ll n;
+        cin>>n;
+        vector<ll> a(n,0),c(n,0);
+        ll b[n]={0};
+        for(ll i=0;i<n;i++)
+        {
+            cin>>a[i];
+        }
+        for(ll i=0;i<n;i++)cin>>b[i];
+        for(ll i=0;i<n;i++)
+        {
+            pq.push(make_pair(a[i],b[i]));
+        }
+        ll a_c=0,b_c=0;
+        while(!pq.empty()){
+            a[a_c++]=pq.top().first;
+            b[b_c]=pq.top().second;
+            c[b_c++]=pq.top().second;
+            pq.pop();
+        }
+        ll sum=0;
+        vector<ll> ans(n,0);
+        ll maxi=-1e9;
+         unordered_map<ll,ll>mp;
+         mergeSort(b, n ,mp);
+        //  for(auto it: a)cout<<it<<" ";
+        //  cout<<"##";
+        //  for(auto it2: c)cout<<it2<<" ";
+        //  cout<<"\n";
+        for(ll i=0;i<n;i++)
+        {
+            sum=n-i-1;
+           sum+=mp[c[i]];
+            ans[i]=sum;
+            maxi=max(maxi,sum);
+            sum=0;
+        }
+        ll cnt=0;
+       // cout<<"##"<<maxi<<endl;
+        for(ll i=0;i<n;i++)
+        {
+            if(ans[i]==maxi)cnt++;
+            //cout<<ans[i]<<" ";
+        }
+        cout<<cnt<<endl;
+        
+    }
+    
+    
+	return 0;
+}
