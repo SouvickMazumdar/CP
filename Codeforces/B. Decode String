@@ -1,0 +1,48 @@
+//https://codeforces.com/contest/1729/problem/C
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<ll> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+
+
+bool comp1(pair<int,int>el1,pair<int,int>el2)
+{
+    if(el1.second<el2.second)
+    {
+        return true;
+    }
+   else
+    return false;
+}
+
+int main() {
+ll t;
+cin>>t;
+while(t--)
+{
+
+    string  a; int x;
+ cin>>x>>a;
+ string str="";
+for(int i=x-1;i>=0;i--)
+{
+    if(a[i]=='0')
+    {
+        str=char(97+((int(a[i-1])-48)+(int(a[i-2])-48)*10)-1)+str;i=i-2;
+    }
+    else
+    str=char(97+int(a[i])-48-1)+str;
+}
+  cout<<str<<endl;
+}
+
+   
+    return 0;  
+}
