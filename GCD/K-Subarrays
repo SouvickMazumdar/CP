@@ -1,0 +1,41 @@
+//https://www.codechef.com/submit/KSUB
+#include <bits/stdc++.h>
+#define ll long long int
+using namespace std;
+
+int main() {
+	// your code goes here
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+	    int n,k;
+	    cin>>n>>k;
+	    int ar[n];
+	    int tot=0;
+	    for(int i=0;i<n;i++)
+	    {
+	        cin>>ar[i];
+	        tot=__gcd(tot,ar[i]);
+	        
+	    }
+	    int ind=0;
+	    int curr=0;
+	    int count=0;
+	    while(ind<n && count<k)
+	    {
+	        curr=0;
+	        while(ind<n &&curr!=tot)
+	        {
+	            curr=__gcd(ar[ind],curr);
+	            ind++;
+	        }
+	        if(curr==tot)
+	        count++;
+	        
+	    }
+	    if(count==k)cout<<"YES\n";
+	    else cout<<"NO\n";
+	}
+	return 0;
+}
