@@ -1,0 +1,51 @@
+//Point to note : that at every row ...no. of elemens= row index
+//There can be 3 types of questions can be formed from this pascal triangle 
+// 1=> To print the entire traingle   TC: O(N*N); SC:O(N*N)
+class Solution {
+public:
+    vector<vector<int>> getmat(int numRows) {
+        vector<vector<int>> ans;
+
+        for(int i=0;i<numRows;i++)
+        {
+            ans[i].resize(i+1);
+            ans[i].push_back(1);
+            
+            for(int j=1;j<i;j++)
+            {
+                ans[i][j]=ans[i-1][j-1]+ans[i-1][j];
+            }
+        }
+       return ans;
+        
+    }
+};
+
+//2=> Print the element at given row and column index
+//just use the mathematical formulae nCr
+// n=given row index, r= given column index
+//ELEMENT=  nCr     //for 0 indexing row and column
+
+//3=> Print the entire row of given row index
+//here the trick is again hidden in nCr
+//TC: O(N)
+//SC:O(N)
+
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        vector<int> ans;
+        ans.push_back(1);
+        long long int prev=1;
+        for(int i=1;i<=rowIndex;i++)
+        {
+            int curr=(prev*(rowIndex-i+1))/i;
+            ans.push_back(curr);
+            prev=curr;
+        }
+        return ans;
+        
+    }
+};
+//FOR MORE UNDERSTANDING VISIT HERE
+https://www.youtube.com/watch?v=6FLvhQjZqvM&ab_channel=takeUforward
