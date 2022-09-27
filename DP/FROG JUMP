@@ -1,0 +1,43 @@
+//https://www.codingninjas.com/codestudio/problems/frog-jump_3621012?leftPanelTab=1
+#include<bits/stdc++.h>
+//int f(int i,vector<int> &heights)
+int f(int i,vector<int> &heights,vector<int> &dp)
+{
+    if(i==0) return 0;
+    if(dp[i]!=-1)return dp[i];
+    int left=f(i-1,heights,dp)+abs(heights[i]-heights[i-1]);
+    int right=INT_MAX;
+    if(i>1)
+         right=f(i-2,heights,dp)+abs(heights[i]-heights[i-2]);
+    //return min(left,right);
+    return dp[i]=min(left,right);
+    
+}
+int frogJump(int n, vector<int> &heights)
+{
+    vector<int>dp(n,0);
+    //return(f(n-1,heights,dp));
+    // Write your code here.
+//    for(int i=1;i<=n-1;i++)
+//    {
+//        int left=dp[i-1]+abs(heights[i]-heights[i-1]);
+//        int right=INT_MAX;//it is important because at last right will have nothing so INT_MAX will be there to perform the min operation
+//        if(i>1)
+//             right=dp[i-2]+abs(heights[i]-heights[i-2]);
+//        dp[i]=min(left,right);
+//    }
+    
+    //**************Space Optimization***********
+      int prev=0,prev2=0;
+       for(int i=1;i<=n-1;i++)
+       {
+           int fs=prev+abs(heights[i]-heights[i-1]);
+           int ss=INT_MAX;//it is important because at last right will have nothing so INT_MAX will be there to perform the min operation
+           if(i>1)
+               ss=prev2+abs(heights[i]-heights[i-2]);
+           int curi=min(fs,ss);
+           prev2=prev;
+           prev=curi;
+       }
+    return prev;
+}
