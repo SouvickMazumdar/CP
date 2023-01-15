@@ -1,0 +1,30 @@
+//https://leetcode.com/problems/sum-of-mutated-array-closest-to-target/description/
+
+
+class Solution {
+public:
+    int k(int target,int n)
+    {
+        int k=target/n;
+        return(abs(target-k*n)>abs(target-(k+1)*n))?k+1:k;
+    }
+    int findBestValue(vector<int>& arr, int target) {
+        sort(arr.begin(),arr.end());
+        int n=arr.size();int i=0;
+        for(;i<n && target>arr[i]*(n-i);i++)
+        {
+            target-=arr[i];
+        }
+        //return i==n?arr[n-1]: int(round((target-0.00001)/(n-i)));
+        return i==n?arr[n-1]: k(target,n-i);
+        
+    }
+};
+
+//HOW THIS WILL WORK?
+  //return i==n?arr[n-1]: int(round((target-0.00001)/(n-i)));
+
+//If A is not empty, intuitively the answer should be the nearest integer to target / len(A).
+
+//Since we need to return the minimum such integer if there is a tie,
+//if target / len(A) has 0.5 we should round down,
