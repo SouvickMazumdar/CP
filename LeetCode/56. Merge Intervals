@@ -1,5 +1,8 @@
 //https://leetcode.com/problems/merge-intervals/description/
 
+//Here we have used the concept of merging intervals.
+//Also used sorting concept
+
 class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
