@@ -1,0 +1,24 @@
+//https://leetcode.com/problems/insert-interval/description/
+
+//Here we have used the concept of merging intervals.
+//Also use sorting concept
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> vr;
+        intervals.push_back(newInterval);
+        sort(intervals.begin(),intervals.end());
+        for (auto i: intervals)
+        {
+           
+            if(vr.empty()|| vr.back()[1]<i[0])
+            vr.push_back(i);
+            else
+            vr.back()[1]=max(vr.back()[1],i[1]);
+        }
+        return vr;
+        
+    
+        
+    }
+};
