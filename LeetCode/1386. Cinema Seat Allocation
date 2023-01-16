@@ -1,0 +1,48 @@
+//https://leetcode.com/problems/cinema-seat-allocation/description/
+
+
+class Solution {
+public:
+   int binary_s(vector<int> &ac,int tar)
+    {
+        if(find(ac.begin(),ac.end(),tar)==ac.end())
+        return -1;
+        else return 0;
+    }
+    int maxNumberOfFamilies(int n, vector<vector<int>>& reservedSeats) {
+        unordered_map<int,vector<int>>mp;
+        for(auto i: reservedSeats)
+        {
+            mp[i[0]].push_back(i[1]);
+        }
+        int count=(n-mp.size())*2;//To handle empty rows 
+        for(auto k:mp)
+        {
+            int not_mid=0;
+            if(k.second.size()==0){count+=2;continue;}
+            int a=binary_s(k.second,2);
+            int b=binary_s(k.second,3);
+            int c=binary_s(k.second,4);
+            int d= binary_s(k.second,5);
+            int e=binary_s(k.second,6);
+            int f=binary_s(k.second,7);
+            int g=binary_s(k.second,8);
+            int h= binary_s(k.second,9);
+            if(a==-1 && b==-1 && c==-1 && d==-1)
+            {
+                not_mid=1;
+                count++;
+            }
+            if(e==-1 && f==-1 && g==-1 && h==-1)
+            {
+                not_mid=1;
+                count++;
+            }
+            if(not_mid!=1 && c==-1 && d==-1 && e==-1 && f==-1)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+};
