@@ -1,0 +1,19 @@
+//https://leetcode.com/problems/merge-intervals/description/
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>> vr;
+        sort(intervals.begin(),intervals.end());
+        for (auto i: intervals)
+        {
+           
+            if(vr.empty()|| vr.back()[1]<i[0])
+            vr.push_back(i);
+            else
+            vr.back()[1]=max(vr.back()[1],i[1]);
+        }
+        return vr;
+        
+    }
+};
