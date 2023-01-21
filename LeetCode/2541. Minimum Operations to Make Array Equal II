@@ -1,0 +1,30 @@
+//https://leetcode.com/problems/minimum-operations-to-make-array-equal-ii/description/
+
+
+class Solution {
+public:
+    long long minOperations(vector<int>& nums1, vector<int>& nums2, int k) {
+        long long dif1=0,dif2=0;
+        int n=nums1.size();
+       if(k==0)
+       {
+           if(nums1!=nums2)return -1;
+           return 0;
+       }
+        for(int i=0;i<n;i++)
+        {
+            long long s=abs(nums1[i]-nums2[i]);
+            if(s%k!=0)return -1;
+            if(nums1[i]==nums2[i])continue;
+            if(nums1[i]<nums2[i])
+            {
+                dif1+=s/k;
+            }
+            else
+            dif2+=s/k;
+        }
+        if(dif1==dif2)return dif1;
+        return -1;
+        
+    }
+};
