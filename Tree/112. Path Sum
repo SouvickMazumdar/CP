@@ -1,0 +1,19 @@
+//https://leetcode.com/problems/path-sum/description/
+//the main concept here is backtracking 
+class Solution {
+public:
+    bool check(TreeNode* root, int t,int s)
+    {
+        if(!root)return false;
+        if(root->left==NULL && root->right==NULL)
+        return root->val+s==t;
+        s+=root->val;   //Filling the container
+        bool lh=check(root->left,t,s);
+        bool rh=check(root->right,t,s);
+        s-=root->val;   //Emptying the container
+        return lh||rh;    //for true false check
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) {
+       return check(root,targetSum,0);
+    }
+};
