@@ -1,0 +1,22 @@
+//https://leetcode.com/problems/add-digits/description/
+/*
+Figured out that a number % 9 gave its final sum of digits, but with some conditions:
+
+Num must not be equal to 0.
+
+9 must not be a factor of num.
+
+Num had to be larger than 9.
+
+
+*/
+class Solution {
+public:
+    int addDigits(int num) {
+        if(num%9==0 && num!=0)
+        return 9;
+        else if(num>9)
+        return num%9;
+        return num;
+    }
+};
