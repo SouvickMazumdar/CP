@@ -1,0 +1,71 @@
+//https://www.codechef.com/problems/EVALMAS
+
+#include <bits/stdc++.h>
+#define ll long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(__null);
+using namespace std;
+
+int main() {
+    fastio();
+	// your code goes here
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+	    ll a,b;
+	    cin>>a>>b;
+	    string ans="";
+	    if(b>a+1|| b<(a*-1)+1)
+	    ans="-1";
+	    else
+	    {
+	        if(b>a)
+	        {
+	            for(ll i=0;i<a;i++)
+	            {
+	                ans+="+";
+	            }
+	        }
+	        else
+	        {
+	                if(b==1)
+	                {
+	                    for(ll i=0;i<a;i++)
+    	                {
+    	                    ans+="*";
+    	                }
+	                }
+	                else
+	                {
+	                   if(b>0)
+	                   {
+	                        ll h=a-b+1;
+    	                    for(ll i=0;i<h;i++)
+    	                    {
+    	                        ans+="*";
+    	                    }
+    	                    for(ll j=0;j<a-h;j++)
+    	                    {
+    	                        ans+="+";
+    	                    }
+	                   }
+	                   else
+	                   {
+	                       ll h=a+b-1;
+	                       for(ll i=0;i<h;i++)
+    	                    {
+    	                        ans+="*";
+    	                    }
+    	                    for(ll j=0;j<a-h;j++)
+    	                    {
+    	                        ans+="-";
+    	                    }
+	                   }
+	                }
+	                
+	        }
+	    }
+	    cout<<ans<<"\n";
+	}
+	return 0;
+}
