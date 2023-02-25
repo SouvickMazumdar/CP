@@ -1,0 +1,14 @@
+//https://leetcode.com/problems/unique-number-of-occurrences/description/
+
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        unordered_map<int,int>mp;
+        for(auto i:arr)
+        mp[i]++;
+        set<int>s;
+        for(auto it:mp)
+        s.insert(it.second);
+        return mp.size()==s.size();
+    }
+};
