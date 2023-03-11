@@ -1,0 +1,21 @@
+//https://leetcode.com/problems/flood-fill/description/
+class Solution {
+public:
+     void dfs(int sr,int sc, vector<vector<int>> &image, vector<vector<int>> &vis,int newColor,int inColor)
+    {
+        if(sr>=0 && sr<image.size() && sc>=0 && sc<image[0].size() && vis[sr][sc]!=newColor && image[sr][sc]==inColor)
+        {
+            vis[sr][sc]=newColor;
+            dfs(sr+1,sc,image,vis,newColor,inColor);
+            dfs(sr-1,sc,image,vis,newColor,inColor);
+            dfs(sr,sc+1,image,vis,newColor,inColor);
+            dfs(sr,sc-1,image,vis,newColor,inColor);
+        }
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+     int initial_color=image[sr][sc];
+        vector<vector<int>> vis=image;
+        dfs(sr,sc,image,vis,color,initial_color);
+        return vis;   
+    }
+};
