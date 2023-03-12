@@ -1,3 +1,8 @@
+//https://leetcode.com/problems/01-matrix/description/
+
+
+//Here we have choosen BFS treaversal because we have to find the minimum distanct, so we have to move in all direction all at once. That's why level order traversal is prefered
+
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& grid) {
