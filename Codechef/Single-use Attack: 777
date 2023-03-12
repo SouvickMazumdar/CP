@@ -1,0 +1,28 @@
+//https://www.codechef.com/problems/SINGLEUSE
+#include <bits/stdc++.h>
+#define ll long long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(__null);
+#define endl "\n"
+using namespace std;
+
+int main() {
+    fastio();
+	// your code goes here
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+	    int a,b,c;
+	    cin>>a>>b>>c;
+	    a=a-c;
+	    int cnt=1;
+	    if(a>0)
+	    {
+	        cnt+=ceil((a*1.0)/b);
+	    }
+	    cout<<cnt<<endl;
+	    
+	    
+	}
+	return 0;
+}
