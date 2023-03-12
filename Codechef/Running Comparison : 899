@@ -1,0 +1,33 @@
+//codechef.com/problems/RUNCOMPARE
+#include <bits/stdc++.h>
+#define ll long long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(__null);
+#define endl "\n"
+using namespace std;
+
+int main() {
+    fastio();
+	// your code goes here
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+	    int n;
+	    cin>>n;
+	    vector<int> a(n,0),b(n,0);
+	    for(int i=0;i<n;i++)
+	    cin>>a[i];
+	    for(int i=0;i<n;i++)
+	    cin>>b[i];
+	    int cnt=0;
+	    for(int i=0;i<n;i++)
+	    {
+	        int dif=abs(a[i]-b[i]);
+	        if(dif<=a[i] && dif<=b[i])
+	        cnt++;
+	    }
+	    cout<<cnt<<endl;
+	    
+	}
+	return 0;
+}
