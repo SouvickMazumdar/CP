@@ -1,0 +1,16 @@
+//https://leetcode.com/problems/pass-the-pillow/description/
+class Solution {
+public:
+    int passThePillow(int n, int time) {
+       int di=(n-1)*2;
+        int k=time%di;
+        if(k>n-1)
+        {
+            return n-(k%(n-1));
+        }
+        else
+        {
+            return k+1;
+        }
+    }
+};
