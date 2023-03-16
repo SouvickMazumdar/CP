@@ -1,0 +1,28 @@
+//https://leetcode.com/problems/split-with-minimum-sum/
+
+class Solution {
+public:
+    int splitNum(int num) {
+        vector<int> vec;
+        int c=num;
+        while(c>0)
+        {
+            int d=c%10;
+            if(d!=0)
+            {
+                vec.push_back(d);
+            }
+            c/=10;
+        }
+        sort(vec.begin(),vec.end());
+        int k=0;
+        int first=0,second=0;
+        for(auto i: vec)
+        {
+            if(k%2==0)first=first*10+i;
+            else second=second*10+i;
+            k++;
+        }
+        return first+second;
+    }
+};
