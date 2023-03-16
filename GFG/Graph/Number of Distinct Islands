@@ -1,0 +1,52 @@
+//https://practice.geeksforgeeks.org/problems/number-of-distinct-islands
+
+
+//NOTE: THis question is important regarding logic. Here we have to store the unique shapes of islands
+//To store the uniques we will use set but what about the shap how we will store the shape
+// To solve this we will go with idea that if we subtract the base position of the island(index of starting 1) from every island position(others 1) we will get
+//a same shape apart from being in any other position.
+class Solution {
+  private:
+  void dfs(int row,int col, vector<vector<int>>&grid, vector<vector<int>>&vis, vector<pair<int,int>> &vec,int row0,int col0)
+  {
+      vis[row][col]=1;
+      vec.push_back({row-row0,col-col0});//here we are storing the shape by subtracting the starting address
+      int n=grid.size();
+      int m=grid[0].size();
+      int delR[]={-1,0,+1,0};
+      int delC[]={0,-1,0,+1};
+      for(int i=0;i<4;i++)
+      {
+          int nrow=row+delR[i];
+          int ncol=col+delC[i];
+          if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol] && grid[nrow][ncol]==1)
+          {
+             dfs(nrow,ncol,grid, vis, vec, row0, col0);
+          }
+      }
+      
+  }
+  public:
+  
+    int countDistinctIslands(vector<vector<int>>& grid) {
+        // code here
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<int>> vis(n,vector<int>(m,0));
+        set<vector<pair<int,int>>> st;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(!vis[i][j] && grid[i][j]==1)
+                {
+                    vector<pair<int,int>> vec;
+                    dfs(i,j,grid,vis,vec,i,j);
+                    st.insert(vec);
+                }
+            }
+        }
+        return st.size();
+        
+    }
+};
