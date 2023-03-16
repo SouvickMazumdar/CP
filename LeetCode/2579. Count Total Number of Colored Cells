@@ -1,0 +1,15 @@
+//https://leetcode.com/problems/count-total-number-of-colored-cells/
+
+class Solution {
+public:
+    long long coloredCells(int n) {
+        if(n==1)return 1;
+       long long sum=0;
+        for(int i=1;i<n;i++)
+        {
+            sum+=4*i;
+            
+        }
+        return sum+1;
+    }
+};
