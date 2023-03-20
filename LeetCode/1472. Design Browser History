@@ -1,0 +1,36 @@
+//https://leetcode.com/problems/design-browser-history/description/
+class BrowserHistory {
+public:
+    vector<string> ans;
+    int cur_idx=0;
+    BrowserHistory(string homepage) {
+        ans.push_back(homepage);
+        cur_idx=0;
+    }
+    
+    void visit(string url) {
+      ans.resize(cur_idx+1);
+      ans.push_back(url);  
+      cur_idx++;
+    }
+    
+    string back(int steps) {
+        int idx=cur_idx-steps>0?cur_idx-steps:0;
+        cur_idx=idx;
+        return ans[cur_idx];
+    }
+    
+    string forward(int steps) {
+        int idx=ans.size()-1>cur_idx+steps?cur_idx+steps: ans.size()-1;
+        cur_idx=idx;
+        return ans[cur_idx];
+    }
+};
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory* obj = new BrowserHistory(homepage);
+ * obj->visit(url);
+ * string param_2 = obj->back(steps);
+ * string param_3 = obj->forward(steps);
+ */
