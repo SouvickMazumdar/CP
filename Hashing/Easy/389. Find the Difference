@@ -1,0 +1,22 @@
+//https://leetcode.com/problems/find-the-difference/description/
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+        map<char,int>mp;
+        string m=s+t;
+        for(char ch:m)
+        {
+            mp[ch]++;
+        }
+        char a;
+        for(auto it:mp)
+        {
+            if(it.second%2!=0)
+            {
+                a=it.first;break;
+            }
+        }
+        return a;
+       
+    }
+};
