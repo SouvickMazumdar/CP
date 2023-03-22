@@ -1,0 +1,62 @@
+// problem link
+// https://leetcode.com/problems/minimum-score-of-a-path-between-two-cities/description/
+
+
+//Beautiful Explanation 
+// https://leetcode.com/problems/minimum-score-of-a-path-between-two-cities/solutions/3327539/with-images-and-hints-beats-94-dsu-union-find/
+class Solution {
+    int *parent;
+    int *rank;
+public:
+    int find(int x)
+    {
+        while(parent[x]!=x)
+        {
+            x=parent[parent[x]];
+        }
+        return x;
+    }
+    void union_find(int x,int y)
+    {
+        int xpar=find(x);
+        int ypar=find(y);
+        if(xpar==ypar)return;
+        else if(rank[xpar]<rank[ypar])
+        {
+            parent[xpar]=ypar;
+        }
+        else if(rank[ypar]<rank[xpar])
+        {
+            parent[ypar]=xpar;
+        }
+        else
+        {
+            parent[ypar]=xpar;
+            rank[xpar]++;
+        }
+
+    }
+    int minScore(int n, vector<vector<int>>& roads) {
+    //   union find
+    parent=new int[n+1];
+    rank=new int[n+1];
+    for(int i=0;i<n+1;i++){parent[i]=i;rank[i]=0;}
+
+    for(auto it:roads)
+    {
+        union_find(it[0],it[1]);
+    }
+    int xpar=find(1);
+    int res=INT_MAX;
+    for(auto it: roads)
+    {
+        int ypar=find(it[0]);
+        if(xpar==ypar)
+        {
+            res=min(res,it[2]);
+        }
+
+    }
+    return res;
+    }
+};
