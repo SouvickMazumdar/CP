@@ -1,0 +1,41 @@
+//https://leetcode.com/problems/course-schedule-ii/description/
+
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        // juat use topological sort
+        // and detect the cycle
+        vector<int>adj[numCourses];
+        for(auto it:prerequisites)
+        {
+            adj[it[1]].push_back(it[0]);
+        }
+        int indegree[numCourses];
+        for(int i=0;i<numCourses;i++)indegree[i]=0;
+        for(int i=0;i<numCourses;i++)
+        {
+            for(auto it:adj[i])
+            {
+                indegree[it]++;
+            }
+        }
+
+        queue<int>q;
+        for(int i=0;i<numCourses;i++)
+        {
+            if(indegree[i]==0)q.push(i);
+        }
+        vector<int>topo_sort;int cnt=0;
+        while(!q.empty())
+        {
+            int node=q.front();q.pop();topo_sort.push_back(node);cnt++;
+            for(auto it:adj[node])
+            {
+                indegree[it]--;
+                if(indegree[it]==0)q.push(it);
+            }
+        }
+        if(numCourses==cnt)return topo_sort;
+        return {};
+    }
+};
