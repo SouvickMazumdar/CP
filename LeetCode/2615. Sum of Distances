@@ -1,0 +1,42 @@
+//https://leetcode.com/problems/sum-of-distances/description/
+
+class Solution {
+public:
+    vector<long long> distance(vector<int>& nums) {
+        unordered_map<long long,vector<long long>> ml;
+        for(long long i=0;i<nums.size();i++)
+        {
+            ml[nums[i]].push_back(i);
+        }
+       
+       
+        vector<long long> ans(nums.size(),0);
+        long long sum=0;
+        for(auto it: ml)
+        {
+            int num=it.first;
+            vector<long long>&vec=it.second;
+            long long total_sum=0,pre_sum=0,post_sum=0;
+            for(auto itr: vec)total_sum+=(long long)itr;
+            for(int i=0;i<vec.size();i++)
+            {
+                long long index=vec[i];
+                long long post_sum=total_sum-index-pre_sum;
+
+                ans[index]+=index*i;
+                ans[index]-=pre_sum;
+                ans[index]-=index*(vec.size()-i-1);
+                ans[index]+=post_sum;
+
+                pre_sum+=index;
+
+            }
+
+        }
+            
+           
+        
+        return ans;
+        
+    }
+};
