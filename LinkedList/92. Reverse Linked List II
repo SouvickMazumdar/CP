@@ -1,0 +1,84 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+//Below method will convert linked list to vector reverse the required part then convert it to linked list and return it
+// class Solution {
+// public:
+//     ListNode* reverseBetween(ListNode* head, int left, int right) {
+//         std::vector<int> values(right);
+//         ListNode* curr = head;
+//         for (int i = 0; i < right; ++i) {
+//             values[i] = curr->val;
+//             curr = curr->next;
+//         }
+//         auto startItr = values.begin();
+//         std::advance(startItr, left - 1);
+//         std::reverse(startItr, values.end());
+//         curr = head;
+//         for (int i = 0; i < right; ++i) {
+//             curr->val = values[i];
+//             curr = curr->next;
+//         }
+//         return head;
+//     }
+// };
+
+
+// Below code will just swap the linkage between the nodes
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        ListNode* p1=head;
+        ListNode* p2=head;
+        ListNode* p3;
+        ListNode* temp=head;
+        int count=1;
+        if(left == right) return head;
+        while(temp)
+        {
+            if(count==left-1)
+            {
+                p1=temp;
+                temp=temp->next;
+            }
+            else if (count==left)
+            {
+                p2=temp;
+                p3=p2; temp=temp->next;
+               
+            }
+            else if(count==right)
+            {
+                p3->next=temp->next;
+                temp->next=p2;
+                if(left==1)head=temp;
+                if(left!=1)
+                p1->next=temp;
+            }
+            else if (count>right)
+            break;
+            else if(left<=count && right>=count)
+            {
+                ListNode* cur=temp->next;
+                temp->next=p2;
+                p2=temp;
+                temp=cur;
+            }
+            else 
+            {
+                temp=temp->next;
+            }
+           
+            count++;
+        }
+        return head;
+    }
+};
