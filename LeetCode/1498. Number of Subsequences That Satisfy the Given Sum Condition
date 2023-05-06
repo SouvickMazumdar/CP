@@ -1,0 +1,56 @@
+#define ll long long int
+class Solution {
+private:
+    ll binary_expo( ll a, ll n, ll p)
+    {
+        ll res=1;
+        while(n)
+        {
+            if(n%2==1)
+            {
+                res=(res*a)%p;
+                n--;
+            }
+            else
+            {
+                a=(a*a)%p;
+                n/=2;
+            }
+        }
+        return res;
+    }
+public:
+    int numSubseq(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        int l=0,r=nums.size()-1;
+        int ans=0;
+        int mod=1000000007;
+        vector<int>ar ={1};
+        // Method 2 ==>SC: O(N), TC(N)
+        for(int i=0;i<nums.size();i++)
+        {
+            ar.push_back((ar.back()<<1)%mod);
+        }
+
+
+        while(l<=r)
+        {
+            if(l<=r && nums[l]+nums[r]>target)
+            {
+                r--;
+            }
+            else
+            {
+                // Method 1: TC: O(nlogn), SC: O(1)
+                // ans+=(int)binary_expo(2,r-l,mod);
+
+                // Method 2
+                ans+=ar[r-l];
+                ans=ans % mod;
+                l++;
+            }
+        }
+        return ans;
+        
+    }
+};
