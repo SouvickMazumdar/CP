@@ -1,0 +1,43 @@
+class Solution {
+    int res=0;
+    int adj_check(int a[],int n,int id, int old,int new1)
+    {
+        int count=0;
+        if(id!=0 && a[id-1]==old && old!=0)
+        {
+            count+=2;
+        }
+        if(id!=n-1 && a[id+1]==old && old!=0 )
+            count+=2;
+        res-=count;
+        count=0;
+        if( id!=0 && a[id-1]==new1 )
+        {
+            count+=2;
+            
+        }
+        if(id!=n-1 && a[id+1]==new1 )
+                count+=2;
+        res+=count;
+        return res/2;
+        
+    }
+public:
+    vector<int> colorTheArray(int n, vector<vector<int>>& queries) {
+        
+        int a[n];
+        for(int i=0;i<n;i++)a[i]=0;
+        int m=queries.size();
+        vector<int>ans;
+        for(auto i:queries)
+        {
+            int k=a[i[0]];
+            a[i[0]]=i[1];
+            
+            ans.push_back(adj_check(a,n,i[0],k,i[1]));
+            
+        }
+        return ans;
+        
+    }
+};
