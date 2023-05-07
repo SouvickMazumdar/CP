@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<int> distinctDifferenceArray(vector<int>& nums) {
+        int n=nums.size();
+        int ar[n],br[n];
+        int check[51]={0};
+        int x=0,y=n-1;
+        int count=0;
+        for(int i=0;i<n;i++)
+        {
+            if(check[nums[i]]==0)
+            {
+                count++;
+                check[nums[i]]++;
+                ar[x++]=count;
+                
+            }
+            else
+                ar[x++]=count;
+        }
+        count=0;
+        int check_r[51]={0};
+         for(int i=n-1;i>=0;i--)
+        {
+            if(check_r[nums[i]]==0)
+            {
+                
+                check_r[nums[i]]++;
+                br[y--]=count;
+                count++;
+            }
+             else
+                  br[y--]=count;
+        }
+        vector<int> ans;
+        for(int i=0;i<n;i++)cout<<ar[i]<<"  ";
+        cout<<endl;
+        for(int i=0;i<n;i++)cout<<br[i]<<"  ";
+        cout<<endl;
+        for(int i=0;i<n;i++)
+        {
+            ans.push_back(ar[i]-br[i]);
+        }
+        return ans;
+        
+    }
+};
