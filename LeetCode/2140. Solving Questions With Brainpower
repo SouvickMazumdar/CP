@@ -1,0 +1,25 @@
+class Solution {
+public:
+    // long long rec(vector<vector<int>> q,int i,int n,vector<long long>dp)
+    // {
+    //     if(i>=n)return 0;
+    //     if(dp[i]!=-1)return dp[i];
+    //     int notpick=rec(q,i+1,n,dp);
+    //     int pick=q[i][0]+rec(q,i+q[i][1]+1,n,dp);
+    //     return dp[i]=max(pick,notpick);
+    // }
+    long long mostPoints(vector<vector<int>>& questions) {
+        int n=questions.size();
+        vector<long long>dp(n+1,0);
+        long long notpick=0,pick=0;
+        for(int i=n-1;i>=0;i--)
+        {
+            notpick=0;
+            if(i+1<n)notpick=dp[i+1];
+            pick=0;
+            if(i+questions[i][1]+1<n)pick=dp[i+questions[i][1]+1];
+            dp[i]=max(pick+questions[i][0],notpick);
+        }
+        return dp[0];
+    }
+};
