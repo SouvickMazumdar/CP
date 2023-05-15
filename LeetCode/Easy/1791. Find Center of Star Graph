@@ -1,0 +1,10 @@
+class Solution {
+public:
+    int findCenter(vector<vector<int>>& edges) {
+        vector<int>li=edges[0];
+        vector<int>bi=edges[1];
+        if(li[0]==bi[0]||li[0]==bi[1])return li[0];
+        if(li[1]==bi[0]||li[1]==bi[1])return li[1];
+        return 0;
+    }
+};
