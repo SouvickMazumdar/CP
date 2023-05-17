@@ -1,0 +1,89 @@
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+//SC=O(M+N)        
+        int m=matrix.size();
+        int n=matrix[0].size();
+//         vector<int> row(m,0),column(n,0);int k=0;
+//         for(int i=0;i<m;i++)
+//         {
+//             for(int j=0;j<n;j++)
+//             {
+//                 if(matrix[i][j]==0)
+//                 {
+//                      row[i]++;
+//                     column[j]++;
+//                 }
+//             }
+//         }
+//         int t=0,g=0;
+//          for(int i=0;i<m;i++)
+//         {
+//            if(row[i]!=0)g=1;
+//             for(int j=0;j<n;j++)
+//             {
+//                 if(g==1)matrix[i][j]=0;
+//                 else if(column[j]!=0){matrix[i][j]=0;}
+//             }
+//              g=0;
+//          }
+  
+//Now for SC = O(1)
+ 
+//STEP 1: CHECK FOR 0 IN 0TH ROW AND OTH COLUMN
+        
+        bool row=false,col=false;
+       for(int j=0;j<n;j++){if(matrix[0][j]==0)row=true;}
+        for(int i=0;i<m;i++){if(matrix[i][0]==0)col=true;}
+//STEP 2: FILL 0TH ROW AND 0TH COLUMN WITH RESPECT 0 IN WHOLE MATRIX
+        
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(matrix[i][j]==0)
+                {
+                    matrix[i][0]=0;
+                    matrix[0][j]=0;
+                }
+            }
+        }
+        
+        
+//STEP 3: FILL THE MATRIX DEPENDING UPON THE 0TH ROW AND 0TH COLUMN
+        for(int i=1;i<m;i++)
+        {
+            if(matrix[i][0]==0)
+            {
+                for(int j=1;j<n;j++)
+                    matrix[i][j]=0;
+            }
+        }
+        
+        for(int j=1;j<n;j++)
+        {
+            if(matrix[0][j]==0)
+            {
+                for(int i=1;i<m;i++)
+                    matrix[i][j]=0;
+            }
+        }
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                cout<<matrix[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+//STEP 3: FILL THE 0TH ROW AND 0TH COLUMN depending upon presence of zero or not
+        
+        if(row){
+            for(int j=0;j<n;j++)matrix[0][j]=0;
+        }
+         if(col){
+            for(int i=0;i<m;i++)matrix[i][0]=0;
+        }
+      
+    }
+};
