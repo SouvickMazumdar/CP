@@ -1,0 +1,2 @@
+/* Write your PL/SQL query statement below */
+select t1.id from weather t1 , weather t2 where t1.temperature > t2.temperature and to_date(t1.recorddate) - to_date(t2.recorddate)=1 ;
