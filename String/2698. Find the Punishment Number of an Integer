@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool string_partition(string s, int target)
+    {
+        if(s=="" && target==0)return true;
+        if(target<0) return false;
+        bool ans=false;
+        for(int i=0;i<s.size();i++)//try all pivot points
+        {
+            string left=s.substr(0,i+1);//keep the left part
+            string right=s.substr(i+1);//recurse the right part
+            int left_num=stoi(left);
+            ans=string_partition(right, target-left_num);
+            if(ans){
+                break;
+            }
+        }
+        return ans;
+    }
+    int punishmentNumber(int n) {
+        int total = 0;
+    for (int i = 1; i <= n; i++) {
+        int squared = i * i;
+        if (string_partition(to_string(squared),i)) {
+            total += squared;
+        }
+    }
+    return total;
+    }
+};
