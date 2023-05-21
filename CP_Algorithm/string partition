@@ -1,0 +1,23 @@
+//below fucntion will divide the string in all possible  partiion and will return true only when any of the partition sum is equal to the target
+//Example:
+//target=36
+//string =1296
+//    1+29+6=36
+
+bool string_partition(string s, int target)
+    {
+        if(s=="" && target==0)return true;
+        if(target<0) return false;
+        bool ans=false;
+        for(int i=0;i<s.size();i++)//try all pivot points
+        {
+            string left=s.substr(0,i+1);//keep the left part
+            string right=s.substr(i+1);//recurse the right part
+            int left_num=stoi(left);
+            ans=string_partition(right, target-left_num);
+            if(ans){
+                break;
+            }
+        }
+        return ans;
+    }
