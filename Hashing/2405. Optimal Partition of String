@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int partitionString(string s) {
+        int ar[26]={0};
+        int n=s.size();
+        int count=0;
+        char ch;
+        for(int i=0;i<n;i++)
+        {
+            ch=s[i];
+            if(ar[ch-'a']!=0)
+            
+            {
+                count++;
+                for(int i=0;i<26;i++)
+                {
+                    ar[i]=0;
+                }
+                
+            }
+            ar[ch-'a']++;
+        }
+        if(ar[ch-'a']!=0)count++;
+        return count;
+    }
+};
