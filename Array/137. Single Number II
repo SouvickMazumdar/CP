@@ -1,0 +1,54 @@
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+
+    //SORTING 
+        // sort(nums.begin(),nums.end());
+        // int l=nums.size();
+        // if(l==1)return nums[0];
+        // for(int i=0;i<l;i++)
+        // {
+        //     if(i==0)
+        //     {
+        //         if(nums[i]!=nums[i+1])
+        //         return nums[i];
+        //     }
+        //     else if(i==l-1)
+        //     {
+        //         if(nums[i]!=nums[i-1])return nums[i];
+        //     }
+        //     else
+        //     {
+        //         if(nums[i]!=nums[i+1] && nums[i]!=nums[i-1])return nums[i];
+        //     }
+        // }
+        // return -1;
+
+
+
+
+
+      //BIT MANIPULATION
+
+        int ans=0;
+        int n=nums.size();
+        for(int i=0;i<32;i++)
+        {
+            int sum=0;
+            for(int j=0;j<n;j++)
+            {
+                if((nums[j]>>i)&1)
+                {
+                    sum++;
+                    sum%=3;
+                }
+            }
+            if(sum!=0)
+            {
+                ans|=sum<<i;
+            }
+
+        }
+        return ans;
+    }
+};
