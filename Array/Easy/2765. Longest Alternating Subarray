@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int alternatingSubarray(vector<int>& nums) {
+        int left=0;
+        int n=nums.size();
+        int count=0;
+        vector<int>ar;
+        for(int i=1;i<n;i++)
+        {
+            ar.push_back(nums[i]-nums[i-1]);
+        }
+        int k=ar.size();
+        int len=0;
+        int sum=0;
+        int maxi=INT_MIN;
+        for(int i=0;i<k;i++)
+        {
+            if(sum==1 && ar[i]==1)
+            {
+                len=1;sum=1;continue;
+            }
+            sum+=ar[i];
+            if(sum<=-1 || sum>1 || ar[i]==0)
+            {  
+                len=0;
+                sum=0;continue; 
+            }
+            len++;
+            maxi=max(maxi,len);
+           
+        }
+        if(maxi<=INT_MIN)return -1;
+        return maxi+1;
+    }
+};
