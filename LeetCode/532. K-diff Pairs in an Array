@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int findPairs(vector<int>& nums, int k) {
+        unordered_map<int,int>mp;
+        for(auto it:nums)
+        {
+            mp[it]++;
+        }
+        int count=0;
+        if(k==0)
+        {
+            for(auto it:mp)
+            {
+                if(it.second>1)count++;
+            }
+            return count;
+        }
+        int s=0,l=0;
+        for(auto it: mp)
+        {
+            cout<<it.first<<endl;
+           int s=it.first-k;
+           int l=it.first+k;
+           if(mp.count(s) && mp[s]!=0 && it.second!=0)
+           {
+               count++;
+            
+           }
+           if(mp.count(l) && mp[l]!=0 && it.second!=0)
+           {
+               count++;
+           
+           }
+           mp[it.first]=0;
+
+        }
+        return count;
+    }
+};
