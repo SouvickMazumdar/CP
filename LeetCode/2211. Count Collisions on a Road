@@ -1,0 +1,65 @@
+class Solution {
+public:
+    // int countCollisions(string d) {
+    //     stack<char>st;
+    //     int n=d.size();
+    //     int count=0;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         char ch=d[i];
+    //         if(i==0||ch=='R')
+    //         {
+    //             st.push(ch);
+    //         }
+    //         else if(ch=='L')
+    //         {
+    //             char th=st.top();
+                
+    //             if(th=='R')
+    //             {
+    //                 count+=2;
+    //                 st.pop();
+    //                while(!st.empty()&& st.top()=='R')
+    //                 {
+    //                     count++;st.pop();
+    //                 }
+    //                 st.push('S');
+    //             }
+    //             else if(th=='S')
+    //             {
+    //                 count++;
+    //                 st.push('S');
+    //             }
+    //             else
+    //             st.push(ch);
+    //         }
+    //         else if(ch=='S')
+    //         {
+    //             char th=st.top();
+    //              while(!st.empty()&& st.top()=='R')
+    //                 {
+    //                     count++;st.pop();
+    //                 }
+    //                 st.push('S');
+    //         }
+    //     }
+    //     return count;
+    // }
+
+    int countCollisions(string d) {
+
+        int count_R=0,i=0,n=d.size(),res=0;
+        for(;i<n && d[i]=='L';i++);
+        for(;i<n;i++)
+        {
+            if(d[i]=='R')count_R++;
+            else 
+            {
+                // if(count_R==0)continue;
+                res+=(d[i]=='S')?count_R:count_R+1;
+                count_R=0;
+            }
+        }
+        return res;
+    }
+};
