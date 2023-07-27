@@ -1,0 +1,44 @@
+class Solution {
+public:
+    string greatestLetter(string s) {
+        string str="";
+        int n=s.size();
+        int maxi=-1;
+        char nh;
+        for(int i=0;i<n;i++){
+            char ch=s[i];
+            if(ch>='a' && ch<='z')
+            {
+                nh=ch-32;
+                size_t found = s.find(nh);
+                if (found != string::npos)
+                {
+                    
+                    if(maxi<int(nh))
+                    {
+                        str="";
+                        str+=nh;
+                        maxi=int(nh);
+                    }
+                }
+            }
+            else
+            {
+                nh=ch+32;
+                size_t found = s.find(nh);
+                if (found != string::npos)
+                {
+                   if(maxi<int(nh))
+                    {
+                        str="";
+                        str+=ch;
+                        maxi=int(nh);
+                    }
+                }
+               
+            }
+            // cout<<maxi<<endl;
+        }
+        return str;
+    }
+};
