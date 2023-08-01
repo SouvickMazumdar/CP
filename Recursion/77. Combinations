@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>>res;
+    void recursion(int id,int en,int k,vector<int>&it)
+    {
+        if(id==en+1)
+        {
+            if(it.size()==k)
+            {
+                res.push_back(it);
+            }
+            return;
+        }
+
+        it.push_back(id);
+        recursion(id+1,en,k,it);
+        it.pop_back();
+        recursion(id+1,en,k,it);
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<int>ans;
+        recursion(1,n,k,ans);
+        return res;
+    }
+};
