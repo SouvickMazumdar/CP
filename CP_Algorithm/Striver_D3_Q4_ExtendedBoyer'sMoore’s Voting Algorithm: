@@ -1,0 +1,48 @@
+//LEETCODE PROBLEM: 229
+
+
+//elements which are present more than n/3 times therefore maximum only two element will be possible
+// in the answer list
+ // applying the Extended Boyer Moore's Voting Algorithm:
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int cnt1=0,cnt2=0;
+        int ele1=INT_MIN,ele2=INT_MIN;
+        for(int i:nums)
+        {
+            if(cnt1==0 && ele2!=i) //here is an edge case i.e. if ele2 is already the element then ele1 can not become the same element
+            {
+                ele1=i;
+                cnt1++;
+            }
+            else if(cnt2==0 && ele1!=i)
+            {
+                ele2=i;
+                cnt2++;
+            }
+            else if(ele1==i)cnt1++;
+            else if(ele2==i)cnt2++;
+            else
+            {
+                cnt1--;cnt2--;
+            }
+        }
+        // Below check wether it will the choosen element will satisfy the condition or not
+        // Because it might possible that only one or no element satisfy the required condition
+        cnt1=0;cnt2=0;
+        for(int i:nums)
+        {
+            if(i==ele1)cnt1++;
+            if (i==ele2)cnt2++;
+        }
+
+        vector<int>ls;
+        int check=nums.size()/3;
+        if(cnt1>check)ls.push_back(ele1);
+        if(cnt2>check)ls.push_back(ele2);
+        sort(ls.begin(),ls.end());//Don't worry since maximum only 2 element is possible so in constant time it will get sorted;
+        return ls;
+
+    }
+};
