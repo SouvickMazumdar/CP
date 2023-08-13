@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+int subarraysWithSumK(vector < int > a, int b) {
+    // Write your code here
+    // ********************** BRUTE FORCE **********************
+    // int sum=0;
+    // int n=a.size();
+    // int cnt=0;
+    // for(int i=0;i<n;i++)
+    // {
+    //     sum^=a[i];
+    //     for(int j=i+1;j<n;j++)
+    //     {
+    //         if(sum==b)cnt++;
+    //         sum^=a[j];
+    //     }
+    //     if(sum==b)cnt++;
+    //     sum=0;
+    // }
+    // return cnt;
+
+    // ********************* OPTIMAL APPROACH ***********************
+    // xr^k=x; if this is true then we found sub array so increment count by 1
+    // where xr is the xor of all element till ith index
+    // and k is required xor
+    // x is the xor of sub array stored earlier
+
+    unordered_map<int,int>mp;
+     //(firstXR,count)
+    mp[0]++;//First xor will be 0
+    int xr=0,cnt=0;
+    for(int i=0;i<a.size();i++)
+    {
+        xr=xr^a[i];
+        if(mp.count(xr^b)!=0)
+        {
+            cnt+=mp[xr^b];
+        }
+        mp[xr]++;
+    }
+    return cnt;
+}
