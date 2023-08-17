@@ -1,0 +1,71 @@
+#define lli long long int
+class Solution {
+public:
+    int cnt_ans=0;
+    void dfs(int node, vector<int>adj[],vector<int>&vis)
+    {
+        vis[node]=1;
+        cnt_ans++;
+        for(auto it: adj[node])
+        {
+            if(!vis[it])
+            {
+                
+                dfs(it,adj,vis);
+            }
+        }
+    }
+    int maximumDetonation(vector<vector<int>>& bombs) {
+        int lg=bombs.size();
+        vector<int>adj[lg];
+        queue<int>q;
+        int maxi=-1;
+        int s_node=-1;
+        lli x1,x2,y1,y2,r1,r2,dis,res;
+        for(int i=0;i<bombs.size();i++)
+        {
+            int cnt=0;
+            x1=bombs[i][0];
+            y1=bombs[i][1];
+            r1=bombs[i][2];
+            for(int j=0;j<bombs.size();j++)
+            {
+                if(i!=j)
+                {
+                    x2=bombs[j][0];
+                    y2=bombs[j][1];
+                    r2=bombs[j][2];
+
+                    dis=(y2-y1)*(y2-y1)+(x2-x1)*(x2-x1);//Squred distance
+                    res= r1*r1;
+                    
+                    if(dis<=res)
+                    {
+                        adj[i].push_back(j);cnt++;
+                        
+                    }
+                }
+            }
+            if(maxi<cnt)
+            {
+                maxi=cnt;
+                s_node=i;
+            }
+        }
+        maxi=-1;
+       
+            for(int i=0;i<lg;i++)
+            {
+                cnt_ans=0;
+                vector<int> vis(lg, 0);
+                dfs(i,adj,vis);
+                maxi=max(maxi,cnt_ans);
+                cout<<cnt_ans<<endl;
+                      
+                    
+            }
+       
+        return maxi;
+    }
+
+};
