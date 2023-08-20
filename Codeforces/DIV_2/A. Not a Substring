@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(__null);
+#define endl "\n"
+using namespace std;
+
+int main() {
+    fastio();
+	// your code goes here
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	 string st;
+	 cin>>st;
+	 int n=st.size();
+	 int t=2*n;
+	 string kt="";
+	 for(int i=1;i<=t;i++)
+	 {
+	     if(i<=n)
+	     {
+	         kt+='(';
+	     }
+	     else kt+=')';
+	     
+	 }
+	 string bt="";
+	 for(int i=1;i<=n;i++)
+	 {
+	    
+	         bt+="()";
+	    
+	     
+	 }
+	 if (kt.find(st) == string::npos) {
+	  cout << "YES\n" << kt << '\n';
+	} else if (bt.find(st) == string::npos) {
+	  cout << "YES\n" << bt << '\n';
+	} else {
+	  cout << "NO\n";
+	}
+	  
+	}
+	return 0;
+}
