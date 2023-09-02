@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+int check(vector<int>t,vector<int>s)
+{
+    sort(t.begin(),t.end());
+    sort(s.begin(),s.end());
+    int m=t.size(),n=s.size();
+    int maxi=-1e9;
+    int dif=0;
+    int i=0;
+   while(i<m)
+    {
+        auto it=lower_bound(s.begin(),s.end(),t[i]); 
+       if(it==s.end())
+       {
+           dif=abs(s[n-1]-t[i]);
+       }
+       else if(it==s.begin())
+       {
+           dif=abs(s[0]-t[i]);
+       }
+       else
+       {
+          dif=min(abs(*it-t[i]),abs(*(it-1)-t[i]));
+       }
+       maxi=max(maxi,dif);
+       i++;
+    }
+    return maxi;
+}
+int main()
+{
+
+vector<int>tree{1,23,51,17};
+    vector<int>sprink{13,90,-12,36};
+    int k=check(tree,sprink);
+    cout<<k<<endl;
+
+return 0;
+
+
+}
