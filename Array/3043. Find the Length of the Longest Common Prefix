@@ -1,0 +1,20 @@
+//https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix/
+class Solution:
+    def longestCommonPrefix(self, arr1: List[int], arr2: List[int]) -> int:
+       st=set();res=0
+       for i in arr1:
+           k=i
+           while k>0:
+               st.add(k)
+               k//=10
+       for j in arr2:
+            i=j
+            while i>0:
+                if i in st:
+                    res=max(len(str(i)),res)
+                    print(i)
+                    break
+                i//=10
+       return res
+            
+                    
