@@ -3,7 +3,12 @@
 
 // Floyed Cycle detection
 //https://www.youtube.com/watch?v=Cs3KwAsqqn4&ab_channel=KnowledgeCenter
-
+//Expression: 2(L1+L2)=L1+L2+NC  > the distance covered by the fast pointer before colliding with the slow pointer
+//=>L1=NC-L2
+//Where L1= Distance of starting to first node of Cycle 
+//      L2= Distance from first node of cycle to the node where slow and fast pointer meet
+//      N= No. of turn of the cycle, the fast pointer made to collide with the slow pointer
+//      C= Length of the Cycle i.e no. of node in the cycle
 /**
  * Definition for singly-linked list.
  * struct ListNode {
