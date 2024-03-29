@@ -1,0 +1,22 @@
+//https://leetcode.com/problems/count-subarrays-where-max-element-appears-at-least-k-times/description/?envType=daily-question&envId=2024-03-29
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int k) {
+        long long maxi=*max_element(nums.begin(),nums.end()),count=0;
+        int len=nums.size();
+        long long tot=0;
+        int i=0,j=0,n=nums.size(),sum=0,cnt=0;;
+        while(j<n)
+        {
+           if(nums[j]==maxi)cnt++;
+           while(cnt>=k)
+           {
+                if(nums[i]==maxi)cnt--;
+                i++;
+                tot+=len-j;
+           }
+           j++;
+        }
+        return tot;
+    }
+};
