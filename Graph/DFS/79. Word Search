@@ -1,0 +1,51 @@
+int dr[]{-1,0,1,0};
+int dc[]{0,1,0,-1};
+class Solution {
+public:
+    
+    vector<vector<char>>bt;
+    string wt;
+    int n,m;
+    Solution()
+    {
+        ios_base::sync_with_stdio(false); 
+        cin.tie(NULL); 
+        cout.tie(NULL);
+    }
+    bool isValid(int i,int j)
+    {
+        if(i<0||i>=n)
+        return false;
+        if(j<0||j>=m)
+        return false;
+        return true;
+    }
+    bool dfs(int r,int c,int pr)
+    {
+        if(pr==wt.size())return true;
+        if(!isValid(r,c)||bt[r][c]=='0'||bt[r][c]!=wt[pr])return false;
+        char temp=bt[r][c];
+        bt[r][c]='0';
+        for(int i=0;i<4;i++)
+        {
+            if(dfs(r+dr[i],c+dc[i],pr+1))return true;
+        }
+        bt[r][c]=temp;
+        return false;
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        n=board.size();
+        m=board[0].size();
+        bt=board;
+        wt=word;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(dfs(i,j,0))return true;
+            }
+        }
+        return false;
+
+    }
+};
