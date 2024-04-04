@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int maxDepth(string s) {
+        stack<char>st;
+        int maxi=-1;
+     for(auto i: s)
+     {
+        if(i=='(')st.push('(');
+        if(i==')')st.pop();
+        int n=st.size();
+        maxi=max(maxi,n);
+     } 
+     return maxi;  
+    }
+};
