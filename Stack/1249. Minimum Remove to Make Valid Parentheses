@@ -1,0 +1,72 @@
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        //  ********With Stack******************
+        // stack<int>st;
+        // for(int i=0;i<s.size();i++)
+        // {
+        //     if(s[i]=='(')
+        //     st.push(i);
+        //     else if(s[i]==')')
+        //     {
+        //         // cout<<s[i]<<endl;
+        //         if(!st.empty() && s[st.top()]!=')')st.pop();
+        //         else st.push(i);
+        //     }
+        // }
+
+        //     string ans="";
+        //     for(int i=s.size()-1;i>=0;i--)
+        //     {
+        //         if(!st.empty() && i==st.top())
+        //         {
+        //             st.pop();continue;
+        //         }
+        //         ans=s[i]+ans;
+        //     }
+        //     return ans;
+// `       ******************Without Stack*****************
+        int open=0;
+        int close=0,flag=0;
+        for(auto it:s)
+        {
+            if(it=='(')
+            {
+                open++;
+                flag++;
+            }
+            else if(it==')' && flag>0)
+            {
+                close++;
+                flag--;
+            }
+        }
+        int k=min(open,close);
+        open=close=k;
+        string ans="";
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='(')
+            {
+                if(open>0)
+               {
+                 open--;
+                ans+='(';
+               }
+                continue;
+            }
+            if(s[i]==')')
+            {
+                if(close>0 && close>open)
+                {
+                    close--;
+                ans+=')';
+                }
+                continue;
+            }
+            else ans+=s[i];
+
+        }
+        return ans;
+    }
+};
