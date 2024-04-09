@@ -1,0 +1,8 @@
+class Solution:
+    def timeRequiredToBuy(self, tickets: List[int], k: int) -> int:
+        t=tickets[k]-1;ans=0
+        for i in range(len(tickets)):
+            ans+=(t if tickets[i]-t>=0 else tickets[i])
+        for i in range(k+1):
+            ans+=(1 if tickets[i]>t else 0)
+        return ans
