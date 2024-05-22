@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void solve(int ind,vector<int>nums,vector<int>&vc,set<vector<int>>&st,int n)
+    {
+        if(ind==n)
+        {
+            st.insert(vc);
+            return;
+        }
+        vc.push_back(nums[ind]);
+        solve(ind+1,nums,vc,st,n);
+        vc.pop_back();
+        solve(ind+1,nums,vc,st,n);
+        return;
+
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        set<vector<int>>st;
+        vector<int>vc;
+        solve(0,nums,vc,st,nums.size());
+        vector<vector<int>>ans;
+        for(auto it:st)
+        {
+            ans.push_back(it);
+        }
+        return ans;
+    }
+};
