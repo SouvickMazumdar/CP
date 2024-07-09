@@ -1,0 +1,55 @@
+class Solution {
+    
+public:
+
+// Brute Force
+// void rec(int ind,int n,int target,vector<int>ar, vector<int>&ds,set<vector<int>>&st,vector<vector<int>>ans;)
+// {
+//     if(ind==n)
+//     {
+//         if(target==0)
+//         {
+//             st.insert(ds);
+//         }
+//         return;
+//     }
+//     if(ar[ind]<=target)
+//     {
+//         ds.push_back(ar[ind]);
+//         rec(ind+1,n,target-ar[ind],ar,ds,st,ans);
+//         ds.pop_back();
+//     }
+//     rec(ind+1,n,target,ar,ds,st,ans);
+// }
+    void rec(int ind, int n, int target, vector<vector<int>>&ans,vector<int>&vc, vector<int>ar)
+    {
+        if(target==0)
+        {
+            ans.push_back(vc);return;
+
+        }
+        for(int i=ind;i<n;i++)
+        {
+            if(i>ind && ar[i]==ar[i-1])continue;
+            if(ar[i]>target)break;
+            vc.push_back(ar[i]);
+            rec(i+1,n,target-ar[i],ans,vc,ar);
+            vc.pop_back();
+        }
+    }
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        // set<vector<int>>st;//Brute Force
+        vector<int>vc;
+        vector<vector<int>>ans;
+        
+        sort(candidates.begin(),candidates.end());
+        // rec(0,candidates.size(),target,candidates,vc,st,ans);//Brute Force
+        rec(0,candidates.size(),target,ans,vc,candidates);
+        // for(auto it:st)
+        // {
+        //     ans.push_back(it);
+        // }
+        return ans;
+    }
+};
