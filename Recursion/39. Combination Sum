@@ -1,0 +1,29 @@
+class Solution {
+public:
+vector<vector<int>> ans;
+void recursion(int ind, int target, vector<int>ar, vector<int>&ds,int n)
+{
+    if(ind==n)
+    {
+        if(target==0)
+        {
+            ans.push_back(ds);
+        }
+        return;
+    }
+    if(ar[ind]<=target)
+    {
+        ds.push_back(ar[ind]);
+        recursion(ind,target-ar[ind],ar,ds,n);
+        ds.pop_back();
+    }
+    recursion(ind+1,target,ar,ds,n);
+    
+    return;
+}
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+     vector<int>ds;
+     recursion(0,target,candidates,ds,candidates.size()); 
+     return ans;  
+    }
+};
