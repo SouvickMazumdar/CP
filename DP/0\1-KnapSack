@@ -1,0 +1,47 @@
+class Solution
+{
+    public:
+    //Function to return max value that can be put in knapsack of capacity W.
+    
+    int recur(int ind,int *wt,int *val,int W,int n,vector<vector<int>>&dp)
+    {
+        if(ind==n)return 0;
+        if(W==0)return 0;
+        
+        if(dp[ind][W]!=-1)return dp[ind][W];
+        int pick=INT_MIN;
+        if(wt[ind]<=W) pick=val[ind]+recur(ind+1,wt,val,W-wt[ind],n,dp);
+        int not_pick=recur(ind+1,wt,val,W,n,dp);
+        return dp[ind][W]=max(pick,not_pick);
+    }
+    int tabulation(int W, int wt[], int val[], int n)
+    {
+        vector<vector<int>>dp(n,vector<int>(W+1,0));
+        
+        for(int i=wt[0];i<=W;i++)
+        {
+            dp[0][i]=val[0];
+        }
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<=W;j++)
+            {
+                int pick=INT_MIN;
+                if(wt[i]<=j) pick=val[i]+dp[i-1][j-wt[i]];
+                int not_pick=dp[i-1][j];
+                dp[i][j]=max(pick,not_pick);
+                
+            }
+        }
+        return dp[n-1][W];
+        
+    }
+    int knapSack(int W, int wt[], int val[], int n) 
+    { 
+       // Your code here
+    //   int n=sizeof(wt)/sizeof(wt[0]);
+    return tabulation(W,wt,val,n);
+    vector<vector<int>>dp(n,vector<int>(W+1,-1));
+       return recur(0,wt,val,W,n,dp);
+    }
+};
