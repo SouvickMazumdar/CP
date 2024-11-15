@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+// #define int long long
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define endl "\n"
+#define MOD 1e9+7
+#define all(x) x.begin(),x.end();
+
+int main() {
+    fastio();
+    ll t;
+    cin >> t;
+    // t=1;
+    while (t--) {
+        ll n,k;
+        cin>>n>>k;
+        vector<ll>vc(n);
+        for(int i=0;i<n;i++)
+        {
+            cin>>vc[i];
+        }
+        ll mini=INT_MAX,s=0;
+        for(auto it:vc)
+        {
+            if(it%k==0)
+            {
+                s=1;
+                break;
+            }
+            else
+            {
+                mini=min(mini,k-(it%k));
+            }
+        }
+        if(s==1)mini=0;
+    
+        if(k==4)
+        {
+            ll cnt_ev=0;
+            for(auto it:vc)
+            {
+                if(it%2==0)cnt_ev++;
+            }
+            if(cnt_ev>=2)mini=0;
+            else mini=min(mini,abs(cnt_ev-2));
+        }
+        cout<<mini<<endl;
+        
+       
+     }
+    return 0;
+}
