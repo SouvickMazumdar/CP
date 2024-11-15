@@ -1,0 +1,75 @@
+//https://www.codingninjas.com/codestudio/problems/0-1-knapsack
+//***************memoization***************
+int f(int ind,int max_w,vector<int>&wt,vector<int>&val,vector<vector<int>>&dp)
+{
+    if(ind==0 && max_w>=wt[0])return val[0];
+    if(ind == 0 && max_w<wt[0])return 0;
+    if(dp[ind][max_w]!=-1)return dp[ind][max_w];
+    int notPick=f(ind-1,max_w,wt,val,dp);
+    int Pick=0;
+    if(wt[ind]<=max_w)
+    {
+        Pick=val[ind]+f(ind-1,max_w-wt[ind],wt,val,dp);
+    }
+    return dp[ind][max_w]=max(Pick,notPick);
+}
+//************Tabulation***************
+int tabulation(vector<int> wt, vector<int> val, int n, int max_w,vector<vector<int>>&dp) 
+{
+    for(int i=wt[0];i<=max_w;i++)
+    {
+        dp[0][i]=val[0];  
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+        for(int maxi=1;maxi<=max_w;maxi++)
+        {
+            int notPick=dp[ind-1][maxi];
+            int Pick=0;
+            if(wt[ind]<=maxi)
+            {
+                Pick=val[ind]+dp[ind-1][maxi-wt[ind]];
+            }
+            dp[ind][maxi]=max(Pick,notPick);
+        }
+    }
+    return dp[n-1][max_w];
+    
+}
+//***********SPACE OPTIMAZION*****************
+int space_Optimization(vector<int> wt, vector<int> val, int n, int max_w) 
+{
+    vector<int>prev(max_w+1,0),curi(max_w+1,0);
+     for(int i=wt[0];i<=max_w;i++)
+    {
+        prev[i]=val[0];  
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+        for(int maxi=1;maxi<=max_w;maxi++)
+        {
+            int notPick=prev[maxi];
+            int Pick=0;
+            if(wt[ind]<=maxi)
+            {
+                Pick=val[ind]+prev[maxi-wt[ind]];
+            }
+            curi[maxi]=max(Pick,notPick);
+        }
+        prev=curi;
+    }
+    return prev[max_w];
+    
+    
+}
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	// Write your code here
+    //vector<vector<int>> dp(n,vector<int>(maxWeight+1,-1));
+    //return f(n-1, maxWeight,weight,value,dp);
+//     vector<vector<int>> dp(n,vector<int>(maxWeight+1,0));
+//     return tabulation(weight,value,n, maxWeight,dp);
+   
+    return space_Optimization(weight,value,n, maxWeight);
+
+}

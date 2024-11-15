@@ -1,0 +1,23 @@
+//https://www.codingninjas.com/codestudio/problems/rahul-and-his-chocolates_3118974?source=youtube&campaign=striver_dp_videos&utm_source=youtube&utm_medium=affiliate&utm_campaign=striver_dp_videos&leftPanelTab=1
+#include <bits/stdc++.h> 
+
+int maximumProfit(int n, int fee, vector<int> &arr) {
+    // Write your code here.
+    //int n=arr.size();
+   
+    vector<int>front1(2,0);
+    vector<int>cur(2,0);
+    for(int ind=n-1;ind>=0;ind--)
+     {
+        
+            
+        cur[1]=max(-arr[ind]+front1[0],0+front1[1]);
+
+        cur[0]=max(arr[ind]-fee+front1[1],0+front1[0]);//slight change after sell in the fee
+        
+            front1=cur;
+         
+     }
+    return cur[1];
+}
+

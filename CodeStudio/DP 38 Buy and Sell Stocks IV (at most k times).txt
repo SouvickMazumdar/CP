@@ -1,0 +1,79 @@
+//https://www.codingninjas.com/codestudio/problems/best-time-to-buy-and-sell-stock_1080698?source=youtube&campaign=striver_dp_videos&utm_source=youtube&utm_medium=affiliate&utm_campaign=striver_dp_videos&leftPanelTab=1
+//****************************** N*4 APProach ie even odd appraoch  (TRANSACTION)********************
+int recursion_new(int ind ,int trans,int n,vector<int>&val)
+{
+    if(trans==0)
+        return 0;
+    if(ind==n)
+        return 0;
+    int profit=0;
+    if(trans%2==0)
+        profit=max(-val[ind]+recursion_new(ind+1,trans-1,n,val),0+recursion_new(ind+1,trans,n,val));
+    else//avoid using increment and decrement operator, int place use +1 or -1
+        profit=max(val[ind]+recursion_new(ind+1,trans-1,n,val),0+recursion_new(ind+1,trans,n,val));
+    return profit;
+}
+int memo_new(int ind,int trans,int n,vector<int>&val,vector<vector<int>> &dp)
+{
+    if(trans==0)
+        return 0;
+    if(ind==n)
+        return 0;
+    if(dp[ind][trans]!=-1)return dp[ind][trans];
+    int profit=0;
+    if(trans%2==0)
+        profit=max(-val[ind]+memo_new(ind+1,trans-1,n,val,dp),0+memo_new(ind+1,trans,n,val,dp));
+    else//avoid using increment and decrement operator, int place use +1 or -1
+        profit=max(val[ind]+memo_new(ind+1,trans-1,n,val,dp),0+memo_new(ind+1,trans,n,val,dp));
+    return dp[ind][trans]=profit;
+}
+int tabulation_new(int n,vector<int>&val,vector<vector<int>>&dp,int k)
+{
+    int profit=0;
+    for(int ind=n-1;ind>=0;ind--)//bottom up approach
+    {
+        for(int trans=1;trans<=k;trans++)//bottom up approach
+        {
+                 if(trans%2==0)
+                    profit=max(-val[ind]+dp[ind+1][trans-1],0+dp[ind+1][trans]);
+                else//avoid using increment and decrement operator, int place use +1 or -1
+                    profit=max(val[ind]+dp[ind+1][trans-1],0+dp[ind+1][trans]);
+                dp[ind][trans]=profit;   
+        }
+    }
+                               
+    return dp[0][k];
+}
+int space_optimization_new(int n,vector<int>&val,int k)
+{
+    vector<int>after(k+1,0),cur(k+1,0);
+    int profit=0;
+    for(int ind=n-1;ind>=0;ind--)//bottom up approach
+    {
+        for(int trans=1;trans<=k;trans++)//bottom up approach
+        {
+                 if(trans%2==0)
+                    profit=max(-val[ind]+after[trans-1],0+after[trans]);
+                else//avoid using increment and decrement operator, int place use +1 or -1
+                    profit=max(val[ind]+after[trans-1],0+after[trans]);
+                cur[trans]=profit;   
+        }
+        after=cur;
+    }
+                               
+    return after[k];
+}
+int maximumProfit(vector<int> &prices, int n, int k)
+{
+    // Write your code here.
+    int transaction=k*2;//twice the required transaction
+//     return recursion_new(0,transaction,n,prices);
+    
+//     vector<vector<int>>dp(n,vector<int>(transaction+1,-1));
+//     return memo_new(0,transaction,n,prices,dp);
+    
+//      vector<vector<int>>dp(n+1,vector<int>(transaction+1,0));
+//     return tabulation_new(n,prices,dp,transaction);
+    
+    return space_optimization_new(n,prices,transaction);
+}

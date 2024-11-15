@@ -1,0 +1,60 @@
+//https://www.codingninjas.com/codestudio/problems/target-sum
+//Similar to DP 18 Question
+int findWays(vector<int> &num, int tar)
+{
+//   vector<vector<int>> dp(num.size(),vector<int>(tar+1,-1));
+     vector<vector<int>> dp(num.size(),vector<int>(tar+1,0));
+    //vector<int> prev(tar+1,0),curi(tar+1,0);    
+//******************Tabulation*************
+    //Auxiliary Space is removed
+    int n=num.size();
+   if(num[0]==0)dp[0][0]=2;//pick and not pick
+    else dp[0][0]=1;//not pick
+    if(num[0]!=0 && num[0]<=tar)dp[0][num[0]]=1;
+    for(int i=1;i<n;i++)
+    {
+        for(int j=0;j<=tar;j++)
+        {
+            int notPick=dp[i-1][j];
+            int Pick=0;
+            if(num[i]<=j)
+            {
+                Pick=dp[i-1][j-num[i]];
+            }
+            dp[i][j]=(Pick+notPick)%mod;
+        }
+    }
+    return dp[n-1][tar];
+//**************************Space Optimization**************
+//TC=>O(N*SUM)
+//SC=O(SUM)  
+//    prev[0]=curi[0]=1;
+//     if(num[0]<=tar)prev[num[0]]=1;
+//     for(int i=1;i<n;i++)
+//     {
+//         for(int j=0;j<=tar;j++)
+//         {
+//             int notPick=prev[j];
+//             int Pick=0;
+//             if(num[i]<=j)
+//             {
+//                 Pick=prev[j-num[i]];
+//             }
+//             curi[j]=Pick+notPick;
+//         }
+//         prev=curi;
+//     }
+//     return prev[tar];
+    //return f(num.size()-1,tar,num,dp);
+}
+int countPartitions(int n, int d, vector<int> &arr) {
+    // Write your code here.
+    int totalsum=0;
+    for(auto &it: arr)totalsum+=it;
+    if(totalsum-d<0 || (totalsum-d)%2)return false;//edge cases
+    return findWays(arr,(totalsum-d)/2);
+}
+int targetSum(int n, int target, vector<int>& arr) {
+    // Write your code here.
+    return countPartitions(n,target,arr);
+}

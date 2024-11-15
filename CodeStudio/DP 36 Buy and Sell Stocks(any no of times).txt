@@ -1,0 +1,107 @@
+//https://www.codingninjas.com/codestudio/problems/selling-stock
+#include <bits/stdc++.h>
+long recursion(int ind,int buy,long *val,int n)
+{
+    if(ind==n)
+        return 0;
+    
+    long profit=0;
+    if(buy)
+    {
+        profit=max(-val[ind]+recursion(ind+1,0,val,n),0+recursion(ind+1,1,val,n));
+    }
+    else
+    {
+        profit=max(val[ind]+recursion(ind+1,1,val,n),0+recursion(ind+1,0,val,n));
+    }
+    return profit;
+}
+long memo(int ind,int buy,long *val,int n,vector<vector<long>>&dp)
+{
+     if(ind==n)
+        return 0;
+    if(dp[ind][buy]!=-1)return dp[ind][buy];
+    long profit=0;
+    if(buy)
+    {
+        profit=max(-val[ind]+memo(ind+1,0,val,n,dp),0+memo(ind+1,1,val,n,dp));
+    }
+    else
+    {
+        profit=max(val[ind]+memo(ind+1,1,val,n,dp),0+memo(ind+1,0,val,n,dp));
+    }
+    return dp[ind][buy]=profit;
+}
+long tabulation(long *val,int n,vector<vector<long>>&dp)
+{
+    dp[n][0]=dp[n][1]=0;
+    long profit=0;
+    for(int ind=n-1;ind>=0;ind--)
+    {
+       for(int buy=0;buy<2;buy++)
+       {
+            if(buy)
+            {
+                profit=max(-val[ind]+dp[ind+1][0],0+dp[ind+1][1]);
+            }
+            else
+            {
+                profit=max(val[ind]+dp[ind+1][1],0+dp[ind+1][0]);
+            }
+            dp[ind][buy]=profit;
+       }
+    }
+    return dp[0][1];
+}
+long space_optimization_vec(long *val,int n)
+{
+    vector<long>ahead(2,0),cur(2,0);
+    ahead[0]=ahead[1]=0;
+    long profit=0;
+    for(int ind=n-1;ind>=0;ind--)
+    {
+       for(int buy=0;buy<2;buy++)
+       {
+            if(buy)
+            {
+                profit=max(-val[ind]+ahead[0],0+ahead[1]);
+            }
+            else
+            {
+                profit=max(val[ind]+ahead[1],0+ahead[0]);
+            }
+            cur[buy]=profit;
+       }
+        ahead=cur;
+    }
+    return ahead[1];
+}
+
+long space_optimization_4var(long *val,int n)
+{
+    long aheadBuy=0,aheadNotBuy=0,curBuy=0,curNotBuy=0;
+    //ahead[0]=ahead[1]=0;
+    long profit=0;
+    for(int ind=n-1;ind>=0;ind--)
+    {
+        profit=max(-val[ind]+aheadNotBuy,0+aheadBuy);
+        curBuy=profit;
+        profit=max(val[ind]+aheadBuy,0+aheadNotBuy);
+        curNotBuy=profit;
+        aheadBuy=curBuy;
+        aheadNotBuy=curNotBuy;
+    }
+    return aheadBuy;
+}
+long getMaximumProfit(long *values, int n)
+{ 
+    //Write your code here
+//     return recursion(0,1,values,n);
+//     vector<vector<long>> dp(n,vector<long>(2,-1));
+//     return memo(0,1,values,n,dp);
+//     vector<vector<long>> dp(n+1,vector<long>(2,0));
+//     return tabulation(values,n,dp);
+    
+//      return space_optimization_vec(values,n);
+    return space_optimization_4var(values,n);
+}

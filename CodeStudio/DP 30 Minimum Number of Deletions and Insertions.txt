@@ -1,0 +1,92 @@
+//https://www.codingninjas.com/codestudio/problems/can-you-make
+//**************************RECURSION*****************
+int recursion(int i,int j,string &s,string &t)
+{
+    if(i<0||j<0)
+    {
+        return 0;
+    }
+    if(s[i]==t[j]) return 1+recursion(i-1,j-1,s,t);
+    return max(recursion(i-1,j,s,t),recursion(i,j-1,s,t));
+}
+//******************MEMOIZATION**************
+int memo(int i,int j,string &s,string &t,vector<vector<int>>&dp)
+{
+     if(i<0||j<0)
+    {
+        return 0;
+    }
+    if (dp[i][j]!=-1)return dp[i][j];
+    if(s[i]==t[j]) return dp[i][j]=1+recursion(i-1,j-1,s,t);
+    return dp[i][j]=max(recursion(i-1,j,s,t),recursion(i,j-1,s,t));
+}
+//*****************TABULATION***************
+int tabulation(int n,int m,string &s,string &t,vector<vector<int>>&dp)
+{
+    for(int i=0;i<n;i++)
+    {
+       for(int j=0;j<m;j++)
+       {
+           if(s[i]==t[j])
+           {
+               if(i==0||j==0)
+                   dp[i][j]=1;
+               else
+                   dp[i][j]=1+dp[i-1][j-1];                 
+           }
+           else
+           {
+               int top=0,left=0;
+               if(i>0)top=dp[i-1][j];
+               if(j>0)left=dp[i][j-1];
+               dp[i][j]=max(top,left);
+           }
+       }
+    }
+    return dp[n-1][m-1];
+}
+//*******************SPACE OPTIMIZATION*********************
+int space_optimization(int n,int m,string &s,string &t)
+{
+    vector<int> prev(m,0),curi(m,0);
+    for(int i=0;i<n;i++)
+    {
+       for(int j=0;j<m;j++)
+       {
+           if(s[i]==t[j])
+           {
+               if(i==0||j==0)
+                   curi[j]=1;
+               else
+                   curi[j]=1+prev[j-1];                 
+           }
+           else
+           {
+               int top=0,left=0;
+               if(i>0)top=prev[j];
+               if(j>0)left=curi[j-1];
+               curi[j]=max(top,left);
+           }
+       }
+        prev=curi;
+    }
+    return prev[m-1];
+
+}
+int canYouMake(string &str, string &ptr)
+{
+    int n=str.size(),m=ptr.size();
+//     int k=recursion(n-1,m-1,str,ptr);
+    
+//     vector<vector<int>> dp(n,vector<int>(m,-1));
+//     int k=memo(n-1,m-1,str,ptr,dp);
+    
+//     vector<vector<int>> dp(n,vector<int>(m,0));
+//      int k=tabulation(n,m,str,ptr,dp);
+    
+    int k=space_optimization(n,m,str,ptr);
+    return(n-k+m-k);
+    
+    
+    // Write your code here.
+}

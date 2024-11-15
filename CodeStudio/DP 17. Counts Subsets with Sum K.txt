@@ -1,0 +1,77 @@
+//https://www.codingninjas.com/codestudio/problems/number-of-subsets
+// int f(int ind,int target,vector<int>&arr)
+// {
+//     if(target==0)return 1;
+//     if(ind==0)
+//     {
+//         return (arr[0]==target);
+//     }
+//    int notPick=f(ind-1,target,arr);
+//    int Pick=0;
+//     if(arr[ind]<=target)
+//     Pick=f(ind-1,target-arr[ind],arr);
+//     return notPick+Pick;
+// }
+//*****************Memoiation****************
+//TC=>O(N*SUM)
+//SC=O(N*SUM)+O(N)
+int f(int ind,int target,vector<int>&arr,vector<vector<int>> &dp)
+{
+    if(target==0)return 1;
+    if(ind==0)
+    {
+        return (arr[0]==target);
+    }
+    if(dp[ind][target]!=-1)return dp[ind][target];
+   int notPick=f(ind-1,target,arr,dp);
+   int Pick=0;
+    if(arr[ind]<=target)
+    Pick=f(ind-1,target-arr[ind],arr,dp);
+    return dp[ind][target]=notPick+Pick;
+}
+int findWays(vector<int> &num, int tar)
+{
+//     vector<vector<int>> dp(num.size(),vector<int>(tar+1,-1));
+//     vector<vector<int>> dp(num.size(),vector<int>(tar+1,0));
+    vector<int> prev(tar+1,0),curi(tar+1,0);    
+//******************Tabulation*************
+    //Auxiliary Space is removed
+    int n=num.size();
+//     for(int i=0;i<n;i++)dp[i][0]=1;
+//     if(num[0]<=tar)dp[0][num[0]]=1;
+//     for(int i=1;i<n;i++)
+//     {
+//         for(int j=0;j<=tar;j++)
+//         {
+//             int notPick=dp[i-1][j];
+//             int Pick=0;
+//             if(num[i]<=j)
+//             {
+//                 Pick=dp[i-1][j-num[i]];
+//             }
+//             dp[i][j]=Pick+notPick;
+//         }
+//     }
+//     return dp[n-1][tar];
+//**************************Space Optimization**************
+//TC=>O(N*SUM)
+//SC=O(SUM)  
+   prev[0]=curi[0]=1;
+    if(num[0]<=tar)prev[num[0]]=1;
+    for(int i=1;i<n;i++)
+    {
+        for(int j=0;j<=tar;j++)
+        {
+            int notPick=prev[j];
+            int Pick=0;
+            if(num[i]<=j)
+            {
+                Pick=prev[j-num[i]];
+            }
+            curi[j]=Pick+notPick;
+        }
+        prev=curi;
+    }
+    return prev[tar];
+    //return f(num.size()-1,tar,num,dp);
+}

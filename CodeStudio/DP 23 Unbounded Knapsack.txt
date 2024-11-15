@@ -1,0 +1,132 @@
+//https://www.codingninjas.com/codestudio/problems/unbounded-knapsack
+//**************************RECURSION************************\
+//TC=>>O(2^N)~exponential
+//SC=>>O(N)
+int recursion(int ind,int max_w,vector<int>&profit,vector<int> &wt)
+{
+    
+    if(ind==0)
+    {
+        if(max_w>=wt[0])return (max_w/wt[0])*profit[0];
+        else return 0;
+    }
+    int notPick=recursion(ind-1,max_w,profit,wt);
+    int Pick=-1e9;
+    if(wt[ind]<=max_w)
+    {
+        Pick=profit[ind]+recursion(ind,max_w-wt[ind],profit,wt);//we are not changing the ind because resources are infinite or can be used any no. of times 
+    }
+    return max(Pick,notPick);
+}
+//**************************MEMOIZATION************************\
+//TC=>>O(N*T)
+//SC=>>O(N*T)+O(N)
+int memo(int ind,int max_w,vector<int>&profit,vector<int> &wt,vector<vector<int>>&dp)
+{
+     if(ind==0)
+    {
+        if(max_w>=wt[0])return (max_w/wt[0])*profit[0];
+        else return 0;
+    }
+    if(dp[ind][max_w]!=-1)return dp[ind][max_w];
+    int notPick=memo(ind-1,max_w,profit,wt,dp);
+    int Pick=-1e9;
+    if(wt[ind]<=max_w)
+    {
+        Pick=profit[ind]+memo(ind,max_w-wt[ind],profit,wt,dp);
+    }
+    return dp[ind][max_w]=max(Pick,notPick);
+}
+//************************** TABULATION ************************\
+//TC=>>O(N*T)
+//SC=>>O(N*T)
+int tabulation(int n,int max_w,vector<int>&profit,vector<int> &wt,vector<vector<int>>&dp)
+{
+    for(int tar=0;tar<=max_w;tar++)
+    {
+        dp[0][tar]=(tar/wt[0])*profit[0];
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+        for(int tar=0;tar<=max_w;tar++)
+        {
+            int notPick=dp[ind-1][tar];
+            int Pick=-1e9;
+            if(wt[ind]<=tar)
+            {
+                Pick=profit[ind]+dp[ind][tar-wt[ind]];
+            }
+            dp[ind][tar]=max(Pick,notPick);
+            
+        }
+    }
+    return dp[n-1][max_w];
+}
+//************************** SPACE OPTIMIZATION ************************\
+//TC=>>O(N*T)
+//SC=>>O(T)
+int space_optimization(int n,int max_w,vector<int>&profit,vector<int> &wt)
+{
+    vector<int>prev(max_w+1,0),curi(max_w+1,0);
+    for(int tar=0;tar<=max_w;tar++)
+    {
+        prev[tar]=(tar/wt[0])*profit[0];
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+        for(int tar=0;tar<=max_w;tar++)
+        {
+            int notPick=prev[tar];
+            int Pick=-1e9;
+            if(wt[ind]<=tar)
+            {
+                Pick=profit[ind]+curi[tar-wt[ind]];
+            }
+            curi[tar]=max(Pick,notPick);   
+        }
+        prev=curi;
+    }
+    return prev[max_w];
+}
+//************************** SPACE OPTIMIZATION  1 D ARRAY ************************\
+//TC=>>O(N*T)
+//SC=>>O(T)
+int space_optimization_1D(int n,int max_w,vector<int>&profit,vector<int> &wt)
+{
+    vector<int>prev(max_w+1,0);
+    for(int tar=0;tar<=max_w;tar++)
+    {
+        prev[tar]=(tar/wt[0])*profit[0];
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+        for(int tar=0;tar<=max_w;tar++)
+        {
+            int notPick=prev[tar];
+            int Pick=-1e9;
+            if(wt[ind]<=tar)
+            {
+                Pick=profit[ind]+prev[tar-wt[ind]];
+            }
+            prev[tar]=max(Pick,notPick);   
+        }
+    }
+    return prev[max_w];
+}
+int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight)
+{
+    // Write Your Code Here.
+    
+    //return recursion(n-1,w,profit,weight);
+    
+//     vector<vector<int>> dp(n,vector<int>(w+1,-1));
+//     return memo(n-1,w,profit,weight,dp);
+    
+//     vector<vector<int>> dp(n,vector<int>(w+1,0));
+//     return tabulation(n,w,profit,weight,dp);
+    
+//     return space_optimization(n,w,profit,weight);
+    
+     return space_optimization_1D(n,w,profit,weight);
+    
+}

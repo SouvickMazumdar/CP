@@ -1,0 +1,102 @@
+//https://www.codingninjas.com/codestudio/problems/rod-cutting-problem
+int recursion(int ind, int N, vector<int>&price)
+{
+    if(ind==0)
+    return N*price[0];
+    int notTake=recursion(ind-1,N,price);
+    int Take=-1e9;
+    int rodLength=ind+1;
+    if(rodLength<=N)
+        Take=price[ind]+recursion(ind,N-rodLength,price);
+    return max(Take,notTake);
+}
+int memo(int ind, int N, vector<int>&price,vector<vector<int>>&dp)
+{
+    if(ind==0)
+    return N*price[0];
+    if(dp[ind][N]!=-1)return dp[ind][N];
+    int notTake=memo(ind-1,N,price,dp);
+    int Take=-1e9;
+    int rodLength=ind+1;
+    if(rodLength<=N)
+        Take=price[ind]+memo(ind,N-rodLength,price,dp);
+    return dp[ind][N]=max(Take,notTake);
+    
+}
+int tabulation(int n, int N, vector<int>&price,vector<vector<int>>&dp)
+{
+    for(int rod_len=0;rod_len<=N;rod_len++)
+    {
+        dp[0][rod_len]=rod_len*price[0];
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+         for(int rod_len=0;rod_len<=N;rod_len++)
+         {
+              int notTake=dp[ind-1][rod_len];
+                int Take=-1e9;
+                int rodLength=ind+1;
+                if(rodLength<=rod_len)
+                    Take=price[ind]+dp[ind][rod_len-rodLength];
+              dp[ind][rod_len]=max(Take,notTake);
+         }
+    }
+    return dp[n-1][N];
+}
+int space_optimization(int n, int N, vector<int>&price)
+{
+    vector<int>prev(N+1,0),curi(N+1,0);
+    for(int rod_len=0;rod_len<=N;rod_len++)
+    {
+        prev[rod_len]=rod_len*price[0];
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+         for(int rod_len=0;rod_len<=N;rod_len++)
+         {
+              int notTake=prev[rod_len];
+                int Take=-1e9;
+                int rodLength=ind+1;
+                if(rodLength<=rod_len)
+                    Take=price[ind]+curi[rod_len-rodLength];
+              curi[rod_len]=max(Take,notTake);
+         }
+        prev=curi;
+    }
+    return prev[N];
+}
+int space_optimization_1D(int n, int N, vector<int>&price)
+{
+    vector<int>prev(N+1,0);
+    for(int rod_len=0;rod_len<=N;rod_len++)
+    {
+        prev[rod_len]=rod_len*price[0];
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+         for(int rod_len=0;rod_len<=N;rod_len++)
+         {
+              int notTake=prev[rod_len];
+                int Take=-1e9;
+                int rodLength=ind+1;
+                if(rodLength<=rod_len)
+                    Take=price[ind]+prev[rod_len-rodLength];
+              prev[rod_len]=max(Take,notTake);
+         }
+    }
+    return prev[N];
+}
+int cutRod(vector<int> &price, int n)
+{
+	// Write your code here.
+    //return recursion(n-1,n,price);
+    
+//     vector<vector<int>> dp(n,vector<int>(n+1,-1));
+//     return memo(n-1,n,price,dp);
+    
+//     vector<vector<int>> dp(n,vector<int>(n+1,0));
+//     return tabulation(n,n,price,dp);
+    
+//    return space_optimization(n,n,price);
+return space_optimization_1D(n,n,price);
+}

@@ -1,0 +1,108 @@
+//https://www.codingninjas.com/codestudio/problems/minimum-elements
+//**************************RECURSION************************\
+//TC=>>O(2^N)~exponential
+//SC=>>O(N)
+int recursion(int ind,int target,vector<int> &num)
+{
+    //if(target==0)return 0;
+    if(ind==0)
+    {
+        if(target%num[0]==0)
+            return target/num[0];
+        else
+            return +1e9;
+    }
+    int notPick=recursion(ind-1,target,num);
+    int Pick=+1e9;
+    if(num[ind]<=target)
+        Pick=1+recursion(ind,target-num[ind],num);//ind will not change here due to special property of infinite availability of sources
+    return min(Pick,notPick);
+    
+}
+//**************************MEMOIZATION************************\
+//TC=>>O(N*T)
+//SC=>>O(N*T)+O(N)
+int memo(int ind,int target,vector<int> &num,vector<vector<int>>&dp)
+{
+    if(ind==0)
+    {
+        if(target%num[0]==0)
+            return target/num[0];
+        else
+            return +1e9;
+    }
+    if(dp[ind][target]!=-1)return dp[ind][target];
+    int notPick=memo(ind-1,target,num,dp);
+    int Pick=+1e9;
+    if(num[ind]<=target)
+        Pick=1+memo(ind,target-num[ind],num,dp);//ind will not change here due to special property of infinite availability of sources
+    return dp[ind][target]=min(Pick,notPick);
+}
+//************************** TABULATION ************************\
+//TC=>>O(N*T)
+//SC=>>O(N*T)
+int tabulation(int n,int target,vector<int> &num,vector<vector<int>>&dp)
+{
+    for(int tar=0;tar<=target;tar++)
+    {
+        if(tar%num[0]==0)dp[0][tar]=tar/num[0];
+        else dp[0][tar]=1e9;
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+        for(int tar=0;tar<=target;tar++)
+        {
+            int notPick=dp[ind-1][tar];
+            int Pick=1e9;
+            if(num[ind]<=tar)
+            {
+                Pick=1+dp[ind][tar-num[ind]];
+            }
+            dp[ind][tar]=min(Pick,notPick);
+        }
+    }
+    return dp[n-1][target];
+}
+//************************** SPACE OPTIMIZATION ************************\
+//TC=>>O(N*T)
+//SC=>>O(T)
+int space_optimization(int n,int target,vector<int> &num)
+{
+    vector<int> prev(target+1,0),curi(target+1,0);
+    for(int tar=0;tar<=target;tar++)
+    {
+        if(tar%num[0]==0)prev[tar]=tar/num[0];
+        else prev[tar]=1e9;
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+        for(int tar=0;tar<=target;tar++)
+        {
+            int notPick=prev[tar];
+            int Pick=1e9;
+            if(num[ind]<=tar)
+            {
+                Pick=1+curi[tar-num[ind]];
+            }
+            curi[tar]=min(Pick,notPick);
+        }
+        prev=curi;
+    }
+    return prev[target];
+}
+int minimumElements(vector<int> &num, int x)
+{
+    // Write your code here.
+    
+    //int k=recursion(num.size()-1,x,num);
+    
+//     vector<vector<int>> dp(num.size(),vector<int>(x+1,-1));
+//     int k=memo(num.size()-1,x,num,dp);
+    
+//     vector<vector<int>> dp(num.size(),vector<int>(x+1,0));
+//     int k=tabulation(num.size(),x,num,dp);
+    
+    int k=space_optimization(num.size(),x,num);
+    if(k>=1e9) return -1;
+    return k; 
+}

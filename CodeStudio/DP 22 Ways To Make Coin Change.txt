@@ -1,0 +1,91 @@
+//https://www.codingninjas.com/codestudio/problems/ways-to-make-coin-change
+#include<bits/stdc++.h>
+long recursion(int ind,int target,int *dom)
+{
+    if(target==0)return 1;
+    if(ind==0)
+    {
+        if(target%dom[0]==0)return 1;
+        else return 0;
+    }
+    long notPick=recursion(ind-1,target,dom);
+    long Pick=0;
+    if(dom[ind]<=target)
+        Pick=recursion(ind,target-dom[ind],dom);
+    return Pick+notPick;
+}
+
+long memo(int ind,int target,int *dom,vector<vector<long>>&dp)
+{
+    
+    if(ind==0)
+    {
+        if(target%dom[0]==0)return 1;
+        else return 0;
+    }
+    if(dp[ind][target]!=-1)return dp[ind][target];
+    long notPick=memo(ind-1,target,dom,dp);
+    long Pick=0;
+    if(dom[ind]<=target)
+        Pick=memo(ind,target-dom[ind],dom,dp);
+    return dp[ind][target]=Pick+notPick;
+}
+long tabulation(int n,int target,int *dom,vector<vector<long>>&dp)
+{
+    for(long tar=0;tar<=target;tar++)
+    {
+        if(tar%dom[0]==0)dp[0][tar]=1;
+        else
+            dp[0][tar]=0;
+    }
+    for(long ind=1;ind<n;ind++)
+    {
+        for(long tar=0;tar<=target;tar++)
+        {
+            long notPick=dp[ind-1][tar];
+            long Pick=0;
+            if(dom[ind]<=tar)
+                Pick=dp[ind][tar-dom[ind]];
+            dp[ind][tar]=Pick+notPick;            
+        }
+    }
+    
+    return dp[n-1][target];
+}
+long space_optimization(int n,int target,int *dom)
+{
+    vector<long>prev(target+1,0),curi(target+1,0);
+    for(long tar=0;tar<=target;tar++)
+    {
+        if(tar%dom[0]==0)prev[tar]=1;
+        else
+            prev[tar]=0;
+    }
+    for(long ind=1;ind<n;ind++)
+    {
+        for(long tar=0;tar<=target;tar++)
+        {
+            long notPick=prev[tar];
+            long Pick=0;
+            if(dom[ind]<=tar)
+                Pick=curi[tar-dom[ind]];
+            curi[tar]=Pick+notPick;            
+        }
+        prev=curi;
+    }
+    
+    return prev[target];
+}
+long countWaysToMakeChange(int *denominations, int n, int value)
+{
+    //Write your code here
+   // return recursion(n-1,value,denominations);
+    
+//     vector<vector<long>> dp(n,vector<long>(value+1,-1));
+//     return memo(n-1,value,denominations,dp);
+    
+//       vector<vector<long>> dp(n,vector<long>(value+1,0));
+//     return tabulation(n,value,denominations,dp);
+    
+    return space_optimization(n,value,denominations);
+}\

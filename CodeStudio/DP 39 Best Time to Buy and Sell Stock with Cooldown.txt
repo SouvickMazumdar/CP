@@ -1,0 +1,87 @@
+//https://www.codingninjas.com/codestudio/problems/highway-billboards_3125969?source=youtube&campaign=striver_dp_videos&utm_source=youtube&utm_medium=affiliate&utm_campaign=striver_dp_videos&leftPanelTab=0
+
+#include <bits/stdc++.h> 
+int recursion(vector<int> &arr,int ind,int buy,int n)
+{
+    if(ind>=n)
+    {
+        return 0;
+    }
+    if(buy==1)
+        return max(-arr[ind]+recursion(arr,ind+1,0,n),0+recursion(arr, ind+1, 1, n));
+    if(buy==0)
+        return max(arr[ind]+recursion(arr,ind+2,1,n),0+recursion(arr,ind+1, 0,n));
+}
+
+//****************************MEMOIZATION*********************
+//TC: O(N*2)
+//SC: O(N*2)+O(N)
+
+int memo(vector<int> &arr, int ind, int buy, int n, vector<vector<int>>&dp)
+{
+  if(ind>=n)
+    {
+        return 0;
+    }
+    if(dp[ind][buy]!=-1)return dp[ind][buy];
+    int profit;
+    if(buy==1)
+        return dp[ind][buy]=max(-arr[ind]+recursion(arr,ind+1,0,n),0+recursion(arr, ind+1, 1, n));
+    if(buy==0)
+         return dp[ind][buy]=max(arr[ind]+recursion(arr,ind+2,1,n),0+recursion(arr,ind+1, 0,n));
+  
+}
+
+//****************************TABULATION**************************************
+//TC: O(N*2)
+//SC: O(N*2)
+int tabulation(vector<int> &arr, int ind, int buy, int n, vector<vector<int>>&dp)
+{
+     for(int ind=n-1;ind>=0;ind--)
+     {
+         for(int buy=0;buy<=1;buy++)//we can remove this loop by just using dp[ind][1] & dp[ind][1]
+         {
+             if(buy==1)
+                   dp[ind][buy]=max(-arr[ind]+dp[ind+1][0],0+dp[ind+1][1]);
+             if(buy==0)
+                   dp[ind][buy]=max(arr[ind]+dp[ind+2][1],0+dp[ind+1][0]);
+         }
+     }
+    return dp[0][1];
+}
+
+//****************************SPACE OPTIMIZZTION*********************
+//TC: O(N*2)
+//SC: O(1)
+int spaceOptimization(vector<int> &arr,int n)
+{
+    vector<int>front2(2,0);
+    vector<int>front1(2,0);
+    vector<int>cur(2,0);
+    for(int ind=n-1;ind>=0;ind--)
+     {
+        
+            
+                   cur[1]=max(-arr[ind]+front1[0],0+front1[1]);
+             
+                   cur[0]=max(arr[ind]+front2[1],0+front1[0]);
+        
+            front2=front1;
+            front1=cur;
+         
+     }
+    return cur[1];
+}
+int stockProfit(vector<int> &prices){
+    // Write your code here. 0
+//     return recursion(prices, 0, 1, prices.size());
+    
+//     vector<vector<int>> dp(prices.size(),vector<int>(2,-1));
+//      return memo(prices, 0, 1, prices.size(),dp);
+    
+//    vector<vector<int>> dp(prices.size()+2,vector<int>(2,0));
+//     return tabulation(prices,0,1,prices.size(),dp);
+    
+    return spaceOptimization(prices,prices.size());
+    
+}

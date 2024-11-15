@@ -1,0 +1,143 @@
+//https://leetcode.com/problems/edit-distance
+class Solution {
+public:
+
+//***************************RECURSION******************
+//TC=O(3^N * 3^M)===EXPONENTIAL
+//SC=O(N+M)
+
+int recursion(int i,int j,string s,string t)
+{
+	//first string :: the string which need to be modified 
+	//second string :: the string into which first string to be modified
+	if(i<0) return j+1;//if first string is over
+	if(j<0) return i+1;//if second string is over
+	if(s[i]==t[j])return 0+recursion(i-1,j-1,s,t);
+	else
+	{
+		int a=1+recursion(i,j-1,s,t);//insert
+		int b=1+recursion(i-1,j,s,t);//Remove
+		int c=1+recursion(i-1,j-1,s,t);//Replace
+		return(min(a,min(b,c)));
+	}
+}
+
+//***************************MEMOIZATION******************
+//TC=O(N*M)
+//SC=O(N*M)+O(N+M)
+
+int memo(int i,int j,string s,string t, vector<vector<int>> &dp)
+{
+    //first string :: the string which need to be modified 
+    //second string :: the string into which first string to be modified
+    if(i<0) return j+1;//if first string is over
+    if(j<0) return i+1;//if second string is over
+    if(dp[i][j]!=-1)return dp[i][j];
+    if(s[i]==t[j])return dp[i][j]=0+memo(i-1,j-1,s,t,dp);
+    else
+    {
+        int a=1+memo(i,j-1,s,t,dp);//insert
+        int b=1+memo(i-1,j,s,t,dp);//Remove
+        int c=1+memo(i-1,j-1,s,t,dp);//Replace
+        return dp[i][j]=(min(a,min(b,c)));
+    }
+
+}
+
+//************************1 INDEXING******************
+//HERE WE ARE TRYING TO AVOID 0 BASED INDEXING BY CONVERTING IT TO 1 BASED BECAUSE IT WILL HELP US IN TABULATION
+
+int memo_new(int i,int j,string s,string t, vector<vector<int>> &dp)
+{
+    //first string :: the string which need to be modified 
+    //second string :: the string into which first string to be modified
+    if(i==0) return j;//if first string is over
+    if(j==0) return i;//if second string is over
+    if(dp[i][j]!=-1)return dp[i][j];
+    if(s[i-1]==t[j-1])return dp[i][j]=0+memo_new(i-1,j-1,s,t,dp);
+    else
+    {
+        int a=1+memo_new(i,j-1,s,t,dp);//insert
+        int b=1+memo_new(i-1,j,s,t,dp);//Remove
+        int c=1+memo_new(i-1,j-1,s,t,dp);//Replace
+        return dp[i][j]=(min(a,min(b,c)));
+    }
+
+}
+
+//***************************TABULATION******************
+//TC=O(N*M)
+//SC=O(N*M)
+
+int tabulation(int n,int m,string s,string t, vector<vector<int>> &dp)
+{
+    for(int j=0;j<=m;j++) dp[0][j]=j;
+    for(int i=0;i<=n;i++) dp[i][0]=i;
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=m;j++)
+        {
+            if(s[i-1]==t[j-1]) dp[i][j]=dp[i-1][j-1];
+            else
+            {
+                int a=1+dp[i][j-1];//Insert
+                int b=1+dp[i-1][j];//Remove
+                int c=1+dp[i-1][j-1];//Replace
+                dp[i][j]=min(a,min(b,c));
+            }
+        }
+    }
+    return dp[n][m];
+}
+
+//***************************SPACE OPTIMIZATION******************
+//TC=O(N*M)
+//SC=O(N+M)
+
+int space_optimization(int n,int m,string s,string t)
+{
+    vector<int> prev(m+1,0),cur(m+1,0);
+    for(int j=0;j<=m;j++) prev[j]=j;
+    for(int i=1;i<=n;i++)
+    {
+        cur[0]=i;//this is necesarry because we are filling the first column of dp with dp[i][0]=i; so in every call we have to modify it
+        for(int j=1;j<=m;j++)
+        {
+            if(s[i-1]==t[j-1]) cur[j]=prev[j-1];
+            else
+            {
+                int a=1+cur[j-1];//Insert
+                int b=1+prev[j];//Remove
+                int c=1+prev[j-1];//Replace
+                cur[j]=min(a,min(b,c));
+            }
+        }
+        prev=cur;
+    }
+    return prev[m];
+}
+
+// int space_optimization_1D(int n,int m,string s,string t)
+// {
+//    //we can  not space optimize it to 1D because in ans is dependent on both prev[j-1] and cur[j-1]...... so cun space optimize it further
+// }
+
+int minDistance(string s, string t) {
+	  int n=s.size();
+    int m=t.size();
+
+    //return recursion(n-1,m-1,s,t);
+
+//     vector<vector<int>> dp(n,vector<int>(m,-1));
+//     return memo(n-1,m-1,s,t,dp);
+
+//      vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
+//     return memo_new(n,m,s,t,dp);
+
+//     vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+//     return tabulation(n,m,s,t,dp);
+
+    return space_optimization(n,m,s,t);
+    //return space_optimization_1D(n,m,s,t); //Not possible
+}
+};
