@@ -1,0 +1,58 @@
+//https://codeforces.com/problemset/problem/230/A
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<ll> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+bool comp(pair<int,int> el1, pair<int,int> el2) {
+	if(el1.first < el2.first) {
+		return true; 
+	}
+	if(el1.first == el2.first) {
+		if(el1.second > el2.second) {
+			return true; 
+		}
+	}
+	return false; 
+}
+int main() {
+    
+    int s,n;
+    cin>>s>>n;
+    priority_queue<pair<int,int>> pq;
+    for(int i=0;i<n;i++)
+    {
+        int x,y;
+        cin>>x>>y;
+        pair<int,int> p;
+        p.first=-1*x;p.second=-1*y;
+        pq.push(p);
+        
+    }
+    int c=0;
+    while(!pq.empty())
+    {
+        int fir=-1*pq.top().first;
+        int sec=-1*pq.top().second;
+        if(s<=fir)
+        {
+            c=1;
+            break;
+        }
+        s+=sec;
+        pq.pop();
+    }
+    if(c==0)
+    cout<<"YES";
+    else
+    cout<<"NO";
+    
+    return 0;  
+
+}

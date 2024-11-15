@@ -1,0 +1,55 @@
+//https://codeforces.com/problemset/problem/320/A
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<int> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+ 
+ 
+int main() {
+ 
+  ll a;
+  cin>>a;
+  string s=to_string(a);
+  int c=0;
+   for(int i=0;i<s.length();i++)
+   {
+       if(s[i]!='1' && s[i]!='4')
+       {
+           c=1;
+           break;
+       }
+   }
+  if(c==1 || s[0]!='1')
+  {
+      cout<<"NO";
+  }
+  else
+  {
+      int k=0;
+      for(int i=1;i<s.length()-1;i++)
+      {
+          char ch=s[i];
+          char ch1=s[i-1];
+          char ch2=s[i+1];
+          if(ch=='4'&& ch1=='4' && ch2=='4')
+          {
+            k=1;break;   
+          }
+      }
+      if(k==1)
+      cout<<"NO";
+      else
+      cout<<"YES";
+  }
+ 
+ 
+    return 0;
+
+}

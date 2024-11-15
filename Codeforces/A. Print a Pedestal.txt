@@ -1,0 +1,36 @@
+//https://codeforces.com/contest/1690/problem/A
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<int> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+ 
+ 
+int main() {
+    
+    int t;
+    cin>>t;
+   while(t--)
+   {
+       int k;
+       cin>>k;
+       int d=k%3;
+       int x=k/3;
+       int a2,a1,a3;
+      
+       a1=x+d+((d==1||d==0)?1:0);
+       a2=x+((d==2)?1:0);
+       a3=x-1;
+      cout<<a2<<" "<<a1<<" "<<a3<<"\n";
+      
+   }
+   
+    return 0;  
+
+}

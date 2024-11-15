@@ -1,0 +1,51 @@
+
+//https://codeforces.com/contest/1741/problem/C
+#include <bits/stdc++.h>
+#define ll long long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(__null);
+#define endl "\n"
+using namespace std;
+
+int main() {
+    fastio();
+	// your code goes here
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+      int n;
+      cin>>n;
+      int ar[n];
+      for(int i=0;i<n;i++)
+      {
+          cin>>ar[i];
+      }
+      int ans=0,sum=0,count,jns=0,vns=2001;
+      for(int i=0;i<n;i++)
+      {
+           sum+=ar[i];
+           count=1;
+         int  k=0;
+          for(int j=i+1,cur=0;j<n;j++)
+          {
+              
+              
+              cur+=ar[j];
+              if(cur>sum){k=1;break;}
+              if(cur==sum){jns=max(jns,j-i);cur=0;count++;}
+              
+              
+          }
+          
+          if(k==1)continue;
+          cout<<jns<<"%%%"<<endl;
+         if(count<vns)
+         {
+             vns=count;ans=jns;jns=0;
+         }
+      }
+      if(ans==0)ans=n;
+      cout<<ans<<endl;
+   }
+    return 0;
+}

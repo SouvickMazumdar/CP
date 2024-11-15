@@ -1,0 +1,57 @@
+//http://codeforces.com/problemset/problem/215/A
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<int> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+ 
+ 
+int main() {
+ 
+  int a;
+  cin>>a;
+  int ar[a];
+  for(int i=0;i<a;i++)
+  {
+    cin>>ar[i];  
+  }
+  int b;
+  cin>>b;
+  int br[b];
+  for(int i=0;i<b;i++)
+  {
+    cin>>br[i];  
+  }
+  int k=0;int max=INT_MIN,c=0;
+  for(int i=0;i<a;i++)
+  {
+      for(int j=b-1;j>=k;j--)//value of k
+      {
+          int x=ceil((br[j]*1.0)/ar[i]);//just to check whether perfectly
+          int y=(br[j]/ar[i]);//divisible or not
+          if(x==y)
+          {
+              if(y>max)
+              {
+                  c=0;c++;//to calculate the no. of max ratio 
+                  k=j;max=y;//c should be again initialized by 0 
+			//because new max ratio is found
+              }
+              else if(y==max)
+              {
+                  c++;
+              }
+              break;
+          }
+      }
+  }
+  cout<<c;
+    return 0;
+
+}

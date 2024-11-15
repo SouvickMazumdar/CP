@@ -1,0 +1,34 @@
+//https://codeforces.com/problemset/problem/118/A
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<ll> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+int main() {
+    
+ string g;
+ cin>>g;
+string v="aeiouyAEIOUY";
+string ans="";
+for(int i=0;i<g.length();i++)
+{
+    auto it=find(v.begin(),v.end(),g[i]);
+  
+    if (it==v.end())
+    {
+        if(g[i]>='A' && g[i]<='Z')
+        g[i]+=32;
+        ans=ans+"."+g[i];
+    }
+    
+}
+cout<<ans;
+    return 0;  
+
+}

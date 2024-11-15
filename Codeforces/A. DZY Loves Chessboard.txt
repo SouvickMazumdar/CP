@@ -1,0 +1,50 @@
+//http://codeforces.com/problemset/problem/445/A
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<ll> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+
+int main() {
+ int n,m;
+ cin>>n>>m;
+ char ar[n][m],br[n][m];
+ for(int i=0;i<n;i++)
+ {
+     for(int j=0;j<m;j++)
+     {
+         cin>>ar[i][j];
+     }
+ }
+for(int i=0;i<n;i++)
+ {
+     for(int j=0;j<m;j++)
+     {
+         if(ar[i][j]=='.')
+         {
+             if((i+j)%2==0)br[i][j]='B';
+             else
+             br[i][j]='W';
+         }
+         else
+         br[i][j]='-';
+     }
+ }
+ for(int i=0;i<n;i++)
+ {
+  for(int j=0;j<m;j++)
+  {
+      cout<<br[i][j];
+  }
+  cout<<endl;
+ }
+ 
+    return 0;  
+
+}

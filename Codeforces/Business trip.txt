@@ -1,0 +1,47 @@
+https://codeforces.com/problemset/problem/149/A
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<int> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+ 
+ 
+int main() {
+ 
+int n;cin>>n;
+ priority_queue<int> pq;
+for(int i=1;i<=12;i++)
+{
+    int a;
+    cin>>a;
+    pq.push(a);
+}
+
+int count=0,k=0;
+while(!pq.empty())
+{
+    if(n==0)
+    break;
+     k=n-pq.top();
+    if(k>=0)
+    {
+        count++;
+        n=k;
+    }
+    else break;
+    pq.pop();
+}
+if(k<0)
+count++;
+else if(k>0)
+count=-1;
+cout<<count;
+    return 0;
+
+}

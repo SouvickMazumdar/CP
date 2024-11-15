@@ -1,0 +1,49 @@
+//http://codeforces.com/problemset/problem/205/A
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<int> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+ 
+ 
+int main() {
+ 
+    
+ int a;
+ cin>>a;
+ int min=INT_MAX;int ar[a],pos=-1;
+for(int i=0;i<a;i++)
+{
+    cin>>ar[i];
+    
+}
+for(int i=0;i<a;i++)
+{
+    if(ar[i]<min)
+    {
+        min=ar[i];
+        pos=i+1;
+        
+    }
+}
+int min1=INT_MAX;ar[pos-1]=min1;
+for(int i=0;i<a;i++)
+{
+    if(ar[i]<min1)
+    {
+        min1=ar[i];
+    }
+}
+if(min==min1){
+    cout<<"Still Rozdil";
+}
+else cout<<pos;
+    return 0;
+
+}

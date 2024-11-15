@@ -1,0 +1,30 @@
+//https://codeforces.com/contest/224/problem/A
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<int> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+ 
+ 
+int main() {
+ 
+    int s1,s2,s3;
+    
+    cin>>s1>>s2>>s3;
+    int a=sqrt((s1*s3)/s2);
+    int b=sqrt((s1*s2)/s3);
+    int c=sqrt((s2*s3)/s1);
+    cout<<4*(a+b+c);
+    
+     
+     
+  return 0;
+    
+
+}

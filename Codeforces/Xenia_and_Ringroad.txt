@@ -1,0 +1,39 @@
+https://codeforces.com/problemset/problem/339/B
+#include "bits/stdc++.h"
+#ifdef mlocal
+#include "./Competitive-Code-Library/snippets/prettyprint.h"
+#endif
+using namespace std;
+#define for_(i, s, e) for (int i = s; i < (int) e; i++)
+#define for__(i, s, e) for (ll i = s; i < e; i++)
+typedef long long ll;
+typedef vector<int> vi;
+typedef array<int, 2> ii;
+#define endl '\n'
+ 
+ 
+int main() {
+ 
+  ll n,m;
+  cin>>n>>m;
+  ll sum=0;
+ ll ar[m];
+ for(int i=0;i<m;i++)
+ {
+     cin>>ar[i];
+ }
+ 
+ sum+=ar[0]-1;
+ for(int i=0;i<m-1;i++)
+ {
+    ll a=ar[i],b=ar[i+1];
+    if(b<a)
+    sum+=n-a+b;
+    else 
+    sum+=b-a;
+    
+ }
+ cout<<sum;
+    return 0;
+
+}
