@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+// #define int long long
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define endl "\n"
+#define MOD 1e9+7
+#define all(x) x.begin(),x.end()
+
+bool comp1(pair<ll,ll>el1,pair<ll,ll>el2)
+{
+    if(el1.first<el2.first)
+    {
+        return true;
+    }
+    if(el1.first==el2.first)
+    {
+        if(el1.second>el2.second)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    fastio();
+    ll t;
+    cin >> t;
+    // t=1;
+    while (t--) {
+        ll n,p;
+        cin>>n>>p;
+        vector<ll>vc(n);vector<ll> vr(n);
+        vector<pair<ll,ll>>vp;
+        ll red=n-1;
+        ll ans=p;
+        for(int i=0;i<n;i++)
+        {
+            cin>>vc[i];
+        }
+        for(int i=0;i<n;i++)
+        {
+            cin>>vr[i];
+        }
+        for(int i=0;i<n;i++)
+        {
+            vp.push_back({vr[i],vc[i]});   
+        }
+        vp.push_back({p,red});
+        sort(all(vp),comp1);
+        int i=0;
+        while(red>0)
+        {
+            auto it=vp[i];
+            if(red<it.second)
+            {
+                ans+=red*it.first;
+                red=0;
+            }
+            else
+            {
+                red-=it.second;
+                ans+=it.second*it.first;
+            }
+            i++;
+        }
+        cout<<ans<<endl;
+        
+       
+     }
+    return 0;
+}
