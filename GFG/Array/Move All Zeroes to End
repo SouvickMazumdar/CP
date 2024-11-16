@@ -1,0 +1,23 @@
+class Solution {
+  public:
+    void pushZerosToEnd(vector<int>& arr) {
+        // code here
+         int n=arr.size();
+        int i=0,j=-1;
+        for(int t=0;t<n;t++)
+        {
+            if(arr[t]==0)
+            {
+                j=t;break;
+            }
+        }
+        if(j==-1)return;
+        for (int i = j + 1; i < n; i++) 
+        {
+            if (arr[i] != 0) {
+                swap(arr[i], arr[j]);
+                j++;
+                }
+        }
+    }
+};
