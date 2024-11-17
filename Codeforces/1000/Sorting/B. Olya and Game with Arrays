@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+// #define int long long
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define endl "\n"
+#define MOD 1e9+7
+#define all(x) x.begin(),x.end()
+
+
+
+int main() {
+    fastio();
+    ll t;
+    cin >> t;
+    // t=1;
+    while (t--) {
+       ll n;
+       cin>>n;
+       vector<vector<ll>>vc(n);
+       vector<ll>min2;
+       ll mini=INT_MAX;
+       for(int i=0;i<n;i++)
+       {
+           int r;
+           cin>>r;
+           for(int j=0;j<r;j++)
+           {
+              ll num;
+               cin>>num;
+               vc[i].push_back(num);
+               
+           }
+          ll mint=*min_element(all(vc[i]));
+          mini=min(mini,mint);
+          vc[i].erase(find(all(vc[i]),mint));
+          min2.push_back(*min_element(all(vc[i])));
+       }
+       cout<<mini+accumulate(all(min2),0ll)-*min_element(all(min2))<<endl;
+        
+       
+     }
+    return 0;
+}
