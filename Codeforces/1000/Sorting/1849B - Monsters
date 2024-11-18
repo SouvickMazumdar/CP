@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define endl "\n"
+#define MOD 1e9+7
+#define all(x) x.begin(), x.end()
+
+bool comp1(pair<ll, ll> el1, pair<ll, ll> el2) {
+    if (el1.first > el2.first) {
+        return true;
+    }
+    if (el1.first == el2.first) {
+        return el1.second < el2.second;
+    }
+    return false;
+}
+
+int main() {
+    fastio();
+    ll t;
+    cin >> t;
+    while (t--) {
+        ll n, k;
+        cin >> n >> k;
+
+        vector<pair<ll, ll>> vc(n);
+        vector<ll> ans;
+
+        for (ll i = 0; i < n; i++) {
+            ll as;
+            cin >> as;
+            vc[i] = {as % k, i + 1};  // Store remainder and index (1-based)
+            if (vc[i].first == 0) ans.push_back(i + 1);  // Already divisible
+        }
+
+        // Sort based on the comparator
+        sort(all(vc), comp1);
+
+        for (const auto& p : vc) {
+            if (p.first == 0) break;  // Stop processing if remainder is 0
+            ans.push_back(p.second);  // Add index to result
+        }
+
+        for (auto it : ans) cout << it << " ";
+        cout << endl;
+    }
+    return 0;
+}
