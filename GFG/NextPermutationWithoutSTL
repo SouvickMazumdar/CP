@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    void nextPermutation(vector<int>& arr) {
+        // code here
+        // next_permutation(arr.begin(),arr.end());
+        int n=arr.size(),k=0,store=-1;
+        for(int i=n-2;i>=0;i--)
+        {
+            for(int j=n-1;j>i;j--)
+            {
+                if(arr[i]<arr[j])
+                {
+                    swap(arr[i],arr[j]);
+                    store=i;
+                    k=1;break;
+                }
+                
+            }
+            if(k==1)break;
+        }
+        if(store==-1)sort(arr.begin(),arr.end());
+        else sort(arr.begin()+store+1,arr.end());
+        
+    }
+};
