@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define endl "\n"
+#define MOD 1e9+7
+#define all(x) x.begin(), x.end()
+ll tot(ll num)
+{
+    if(num%2==0){
+       return (num/2)*(num+1);
+    }
+    else
+    {
+        return num*((num+1)/2);
+    }
+}
+int main() {
+    fastio();
+    ll t;
+    cin >> t;
+    while (t--) {
+        ll n, k,q;
+        cin >> n >> k>>q;
+        vector<ll> nums(n);
+
+        for (ll i = 0; i < n; i++) {
+           cin>>nums[i];
+        }
+        ll i=-1,j=0;nums.push_back(q+1);
+        ll maxi=INT_MIN,val=0;
+       while(j<=n&&i<=j)
+       {
+           if(nums[j]>q)
+           {
+               ll diff=j-(i+1);
+               if(diff>=k)
+               {
+                   val+=tot(diff-k+1);
+                   
+               }
+               i=j;
+           }
+           j++;
+       }
+       cout<<val<<endl;
+    }
+    return 0;
+}
