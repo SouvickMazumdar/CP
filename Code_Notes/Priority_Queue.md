@@ -1,5 +1,5 @@
 
-priority_queue<int,vector<int>,greater<int>> pq;//Synatx of Max heap
+# priority_queue<int,vector<int>,greater<int>> pq;//Synatx of Max heap
 
 //Below mentioned code shows that we can modify the sorting of priority queue using specific comparator;
 
