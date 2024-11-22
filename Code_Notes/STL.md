@@ -95,6 +95,7 @@ int main()
     }
     return 0;
 }
+
 Output
 3 2 10 23 33 56 45 47 
 Here, the fifth element is 33, and all elements to its left are smaller than it and all elements to its right are greater than it.
