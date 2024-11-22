@@ -1,4 +1,4 @@
-#std::partial_sort
+# std::partial_sort
 
  which is used for sorting not the entire range, but only a sub-part of it. It rearranges the elements in the range [first, last), 
 in such a way that the elements before middle are sorted in ascending order, whereas the elements after middle are left without any specific order. It can be used in two ways as shown below:
