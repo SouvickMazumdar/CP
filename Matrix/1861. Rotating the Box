@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<vector<char>> rotateTheBox(vector<vector<char>>& vc) {
+        // .  => 0 empty
+        // # =>1 stone
+        // * =>2 block
+        int m=vc.size();int n=vc[0].size();
+
+        for(int i=0;i<m;i++)
+        {
+            int j=n-1,k=n-1;
+            while(j>=0)
+            {
+                if(vc[i][j]=='.')j--;
+                if(j>=0 && vc[i][j]=='#'){
+                    swap(vc[i][j],vc[i][k]);
+                    k--;j--;
+                }
+                if(j>=0 && vc[i][j]=='*')
+                {
+                    j--;
+                    k=j;
+                }
+            }
+        }
+        vector<vector<char>>vk(n,vector<char>(m,'.'));
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                vk[j][m-i-1]=vc[i][j];
+            }
+        }
+        return vk;
+    }
+};
