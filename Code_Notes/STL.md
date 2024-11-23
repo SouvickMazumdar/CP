@@ -99,3 +99,25 @@ int main()
 Output
 3 2 10 23 33 56 45 47 
 Here, the fifth element is 33, and all elements to its left are smaller than it and all elements to its right are greater than it.
+
+
+# std::upper_bound and std::lower_bound for Vector
+
+The std::upper_bound() and std::lower_bound() functions are used for binary search operations STL containers that provide random access. They both are defined inside <algorithm> header file. In this article, we will learn how to use the std::upper_bound and std::lower_bound for vector in C++ STL.
+
+## lower_bound() for Vectors
+The std::lower_bound() method can be used to find the first value that is greater than or equal to given value in the vector. It needs the vector to be sorted because it implements binary search to find the value.
+
+### Syntax
+```
+std::lower_bound(first, last, val, comp);
+```
+
+
+## upper_bound() for Vectors
+The std::upper_bound() method can be used to find the first value that is greater than to given value in the vector. It needs sorted vector because it implements binary search to find the value.
+
+### Syntax
+```
+std::upper_bound(first, last, val, comp);
+```
