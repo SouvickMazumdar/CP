@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define endl "\n"
+#define MOD 1e9+7
+#define all(x) x.begin(), x.end()
+
+int main() {
+    fastio();
+    ll t;
+    cin >> t;
+    while (t--) {
+        ll n;char ch;
+        cin>>n>>ch;
+        string sr;
+        cin>>sr;
+        if(ch=='g'){
+            cout<<0<<endl;
+            continue;
+        }
+        sr=sr+sr;
+        vector<int>ar;
+        for(int i=0;i<2*n;i++)
+        {
+            if(sr[i]=='g')ar.push_back(i);
+        }
+        ll maxi=-1;
+        // for(auto it:ar)cout<<it<<" ";
+        // cout<<endl;
+        for(ll i=0;i<n;i++)
+        {
+            if(sr[i]==ch)
+            {
+                ll id=*lower_bound(ar.begin(),ar.end(),i);
+                // cout<<"%%%%%%%%%%%%%"<<id<<" ";
+                maxi=max(maxi,abs(i-id));
+            }
+        }
+        cout<<maxi<<endl;
+    
+       
+    }
+    return 0;
+}
