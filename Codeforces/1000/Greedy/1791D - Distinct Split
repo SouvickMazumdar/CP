@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define endl "\n"
+#define MOD 1e9+7
+#define all(x) x.begin(), x.end()
+
+int main() {
+    fastio();
+    ll t;
+    cin >> t;
+    while (t--) {
+        ll n;
+        cin>>n;
+        string a;
+        cin>>a;
+        vector<ll>lu(n),ru(n),lf(26),rf(26);
+        lu[0]=1;ru[n-1]=1;lf[a[0]-'a']=1;rf[a[n-1]-'a']=1;
+        int cl=0;
+        for(int i=1;i<n;i++)
+        {
+            if(lf[a[i]-'a']==0)
+            {
+                lu[i]=lu[i-1]+1;
+            }
+            else lu[i]=lu[i-1];
+            
+            if(rf[a[n-1-i]-'a']==0)
+            {
+                ru[n-1-i]=ru[n-i]+1;
+            }
+            else ru[n-1-i]=ru[n-i];
+            
+            lf[a[i]-'a']+=1;
+            rf[a[n-1-i]-'a']+=1;
+        }
+        ll maxi=-1;
+        for(int i=0;i<n-1;i++)
+        {
+            maxi=max(maxi,lu[i]+ru[i+1]);
+        }
+        cout<<maxi<<endl;
+    }
+    return 0;
+}
