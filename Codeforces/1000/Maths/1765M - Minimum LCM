@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define endl "\n"
+#define MOD 1e9+7
+#define all(x) x.begin(), x.end()
+
+int main() {
+    fastio();
+    ll t;
+    cin >> t;
+    while (t--) {
+        ll n;
+        cin>>n;
+        if(n%2==0)cout<<n/2<<" "<<n/2<<endl;
+        else
+        {
+            ll mini=n,start=1,end=n-1;
+            for(int i=2;i<=sqrt(n);i++)
+            {
+                if(n%i==0)
+                {
+                    if(mini>n-i){
+                        start=i;
+                        end=n-i;
+                        mini=end;
+                    }
+                    ll st=n/i;
+                    if(mini>n-st)
+                    {
+                        start=st;
+                        end=n-st;
+                        mini=end;
+                        
+                    }
+                    
+                }
+                
+            }
+            cout<<start<<" "<<end<<endl;
+        }
+    }
+    return 0;
+}
+
