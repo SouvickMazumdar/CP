@@ -121,3 +121,27 @@ The std::upper_bound() method can be used to find the first value that is greate
 ```
 std::upper_bound(first, last, val, comp);
 ```
+
+### Example: Finding Lower and Upper Bound in a Sorted Vector
+
+```
+// C++ program to illustrate the use of std::lower_bound
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    vector<int> v = {10, 20, 30, 40, 50};
+
+    // Finding lower bound for value 35 in vector v
+    cout << *lower_bound(v.begin(), v.end(), 35);
+
+    return 0;
+}
+```
+```
+Output
+56
+67
+```
+Time Complexity: O(log n), where n is the number of elements in vector.
+Auxiliary Space: O(1)
