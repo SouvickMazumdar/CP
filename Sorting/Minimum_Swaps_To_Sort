@@ -1,0 +1,49 @@
+// Minimum Swaps to Sort
+#include <bits/stdc++.h>
+using namespace std;
+int check(int n,vector<int>&ar)
+{
+    map<int,int>mp;
+    for(int i=0;i<n;i++)
+    {
+        mp[ar[i]]=i;
+    }
+    sort(ar.begin(),ar.end());
+    // for(auto it:mp)cout<<it.first<<" "<<it.second<<endl;
+    vector<bool>vis(n,false);
+    int ans=0;
+    for(int i=0;i<n;i++)
+    {
+        
+        if(vis[i]||mp[ar[i]]==i)continue;
+        // int cycle_st=0;
+        int cnt=0;
+        int j=i;
+        while(!vis[j])
+        {
+            // cout<<j<<endl;
+            vis[j]=true;
+            j=mp[ar[j]];
+            cnt++;
+        }
+        if(cnt>0)
+        ans+=(cnt-1);
+    }
+    return ans;
+}
+
+int main()
+{
+    int n;
+    cout<<"Enter the size of the array: ";
+    cin>>n;
+    cout<<"\nEnter the elements of the array: \n";
+    vector<int>ar(n);
+    for(int i=0;i<n;i++)
+    {
+        cin>>ar[i];
+    }
+    cout<<"Minimum Swaps\n";
+    cout<<check(n,ar);
+    return 0;
+}
