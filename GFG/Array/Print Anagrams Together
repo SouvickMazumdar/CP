@@ -1,0 +1,29 @@
+class Solution {
+  public:
+    vector<vector<string>> anagrams(vector<string>& arr) {
+        // code here
+        map<string,vector<int>>mp;
+        vector<string>temp=arr;
+        int n=arr.size();
+        for(int i=0;i<n;i++)
+        {
+            sort(temp[i].begin(),temp[i].end());
+        }
+        for(int i=0;i<n;i++)
+        {
+            mp[temp[i]].push_back(i);
+        }
+        vector<vector<string>>ans;
+        for(auto it:mp)
+        {
+            vector<string>pt;
+            for(auto ir:it.second)
+            {
+                pt.push_back(arr[ir]);
+            }
+            ans.push_back(pt);
+        }
+        
+        return ans;
+    }
+};
