@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    int countTriplets(vector<int> &arr, int target) {
+        // Code Here
+
+        int n=arr.size(),cnt=0;
+        
+        for(int i=0;i<n-2;i++)
+        {
+            int tar=target-arr[i];
+            int l=i+1,r=n-1;
+            while(l<r)
+            {
+                int sum=arr[l]+arr[r];
+                if(sum==tar){
+                    // cout<<arr[i]<<" "<<arr[l]<<" "<<arr[r]<<endl;
+                    int t=r;
+                    while(t>l && arr[t]==arr[r])
+                    {
+                        t--;cnt++;
+                    }
+                    l++;
+                   
+                }
+                else if(sum<tar)
+                {
+                    l++;
+                }
+                else
+                r--;
+            }
+            
+        }
+        return cnt;
+    }
+};
