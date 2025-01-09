@@ -1,0 +1,24 @@
+class Solution {
+  public:
+    vector<int> subarraySum(vector<int> &arr, int target) {
+        // code here
+        int i=0,j=0,sum=0, n=arr.size();
+        while(i<=j && j<n)
+        {
+            sum+=arr[j];
+            j++;
+            if(sum==target)
+            {
+                return {i+1,j};
+            }
+            while(sum>target)
+            {
+                sum-=arr[i];
+                i++;
+                if(sum==target)
+                return {i+1,j};
+            }
+        }
+        return {-1};
+    }
+};
