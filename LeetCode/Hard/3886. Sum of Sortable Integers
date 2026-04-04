@@ -1,0 +1,58 @@
+class Solution:
+    def sort_check(self,s,e,l):
+        kt=l[s:e]
+        n=len(kt)
+        i=0;cnt=0
+        while i<n:
+            if i+1<n and kt[i]>kt[i+1]:
+                cnt+=1
+            i+=1
+        if l[e-1]>l[s]:
+            cnt+=1
+        return cnt<=1
+
+    def sortableIntegers(self, nums: list[int]) -> int:
+        # find divisors
+        i=1;dv=[];n=len(nums)
+        while i*i<=n:
+            if n%i==0:
+                dv.append(i)
+                if i!=n//i:
+                    dv.append(n//i)
+            i+=1
+        # dv.append(n)
+        dv=list(set(dv))
+        # print(dv)
+        ans=[]
+        for k in dv:
+            start,end=0,k
+            ft=0
+            while end<=n:
+                # check the partition can be sort after rotation
+                if self.sort_check(start,end,nums):
+                    start+=k
+                    end+=k
+                else:
+                    ft=1
+                    break
+            if ft==1:
+                continue
+            # we will check whether two partitions are good to be called as sorted
+            fs=0;ls=k-1
+            sf=k;sl=2*k
+            while sl<=n:
+                # check the partition can be sort after rotation
+                if max(nums[fs:ls+1])<=min(nums[sf:sl]):
+                    fs+=k;ls+=k;sf+=k;sl+=k
+                else:
+                    ft=1
+                    break
+            if ft==1:
+                continue
+            ans.append(k)
+        # print(ans)
+        return sum(ans)
+            
+
+
+        
