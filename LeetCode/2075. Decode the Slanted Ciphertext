@@ -1,0 +1,25 @@
+class Solution:
+    def decodeCiphertext(self, et: str, rows: int) -> str:
+        r=rows
+        c=len(et)//r
+        # l=[['1']*c]*rt # this will create all list refering to same list object because of which if you update one list other will also get updated
+        l=[[' ']*c for _ in range(r)]
+        k=0
+        tk=0
+        # print(l)
+        for i in range(r):
+            for j in range(c):
+                l[i][j]=et[tk]
+                tk+=1
+        ans=""
+        for col in range(c):
+            f_col=col
+            for i in range(r):
+                if f_col>=c:
+                    break
+                ans+=l[i][f_col]
+                f_col+=1
+        return ans.rstrip()
+
+
+        
