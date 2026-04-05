@@ -1,0 +1,17 @@
+class Solution:
+    def mirrorFrequency(self, s: str) -> int:
+        mp={};tp={}
+        st="abcdefghijklmnopqrstuvwxyz0123456789"
+        for i in st:
+            mp[i]=0
+        for i in range(13):
+            tp[st[i]]=st[25-i]
+        
+        for i in range(5):
+            tp[st[26+i]]=st[35-i]
+        for i in s:
+            mp[i]+=1
+        tot=0
+        for key,value in tp.items():
+            tot+=abs(mp[key]-mp[value])
+        return tot
