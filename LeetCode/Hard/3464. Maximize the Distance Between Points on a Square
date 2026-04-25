@@ -1,0 +1,44 @@
+# 3464. Maximize the Distance Between Points on a Square
+
+
+class Solution:
+    def maxDistance(self, side: int, points: List[List[int]], k: int) -> int:
+        #converting the square in 1d plane
+        arr=[]
+        for x,y in points:
+            if x==0:
+                arr.append(y)
+            elif y==side:
+                arr.append(side+x)
+            elif x==side:
+                arr.append(3*side-y)
+            else:
+                arr.append(4*side-x)
+        arr.sort()
+        def func(x):
+            p=4*side
+            for c in arr:
+                e=c+p-x
+                s=c
+                for _ in range(k-1):
+                    idx=bisect_left(arr,s+x)
+                    if idx==len(arr) or arr[idx]>e:
+                        s=-1
+                        break
+                    s=arr[idx]
+                if s>=0:
+                    return True
+            return False
+
+        ans=0
+        s=1;e=side
+        while s<=e:
+            mid=(s+e)//2
+            if func(mid):
+                s=mid+1
+                ans=mid
+            else:
+                e=mid-1
+        
+        return ans
+            
