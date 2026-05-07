@@ -1,0 +1,30 @@
+from typing import List
+
+class Solution:
+    def maxPathScore(self, grid: List[List[int]], k: int) -> int:
+        m, n = len(grid), len(grid[0])
+        k = min(399, k)  # problem constraint
+
+        # dp[i][j][c] = max score at (i,j) with cost c
+        dp = [[[float('-inf')] * (k+1) for _ in range(n)] for _ in range(m)]
+
+        # base case: bottom-right cell
+        base_cost = 1 if grid[m-1][n-1] != 0 else 0
+        base_score = grid[m-1][n-1]
+        if base_cost <= k:
+            dp[m-1][n-1][base_cost] = base_score
+
+        # fill backwards
+        for i in range(m-1, -1, -1):
+            for j in range(n-1, -1, -1):
+                cost = 1 if grid[i][j] != 0 else 0
+                score = grid[i][j]
+                for c in range(cost, k+1):
+                    right = dp[i][j+1][c-cost] if j+1 < n else float('-inf')
+                    down  = dp[i+1][j][c-cost] if i+1 < m else float('-inf')
+                    best = max(right, down)
+                    if best != float('-inf'):
+                        dp[i][j][c] = max(dp[i][j][c], score + best)
+        print(dp)
+        ans = max(dp[0][0])
+        return ans if ans != float('-inf') else -1
