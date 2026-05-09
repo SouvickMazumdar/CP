@@ -1,0 +1,30 @@
+class Solution:
+    def maxValue(self, nums: List[int]) -> List[int]:
+        old=nums.copy()
+        n=len(nums)
+        ans=[0]*n
+        maxi=(float('-inf'),-1)
+        lt=[]
+        for i, val in enumerate(nums):
+            if maxi[0]<val:
+                maxi=(val,i)
+            lt.append(maxi)
+        
+        
+        ans=[0]*n
+
+        def func_dc(end,r_mini,r_max):
+            if end<0:
+                return
+            max_val, max_id = lt[end]
+            cur_max=max_val if max_val<=r_mini else r_max
+            r_mini=min(max_val,r_mini)
+            for i in range(max_id,end+1):
+                ans[i]=cur_max
+                if r_mini>old[i]:
+                    r_mini=old[i] 
+            
+            func_dc(max_id-1,r_mini,cur_max)
+        func_dc(n-1,float('inf'),0)
+        return ans
+            
