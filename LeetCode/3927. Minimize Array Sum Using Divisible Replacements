@@ -1,0 +1,29 @@
+from collections import Counter
+
+class Solution:
+    def minArraySum(self, nums: list[int]) -> int:
+
+        dt = Counter(nums)
+
+        nums.sort()
+
+        maxi = max(nums)
+
+        ast = {}
+
+        for x in nums:
+
+            if x in ast:
+                continue
+
+            for i in range(x, maxi + 1, x):
+
+                if i in dt and i not in ast:
+                    ast[i] = x
+
+        tot = 0
+
+        for val in nums:
+            tot += ast[val]
+
+        return tot
