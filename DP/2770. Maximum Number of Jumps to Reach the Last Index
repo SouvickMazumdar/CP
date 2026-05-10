@@ -1,0 +1,89 @@
+class Solution:
+    
+    def rec(self,i,j,target):
+        if i==0:
+            return 0
+        if j<0:
+            return float('-inf')
+
+        pick=float('-inf')
+        not_pick=float('-inf')
+
+        if(abs(self.nums[i]-self.nums[j])<=target):
+            pick=1+self.rec(j,j-1,target)
+
+        not_pick=self.rec(i,j-1,target)
+
+        return max(pick,not_pick)
+
+    def memo(self,i,j,target):
+
+        if i==0:
+            return 0
+
+        if j<0:
+            return float('-inf')
+
+        if self.dp[i][j] is not None:
+            return self.dp[i][j]
+
+        pick=float('-inf')
+        not_pick=float('-inf')
+
+        if(abs(self.nums[i]-self.nums[j])<=target):
+            pick=1+self.memo(j,j-1,target)
+
+        not_pick=self.memo(i,j-1,target)
+
+        self.dp[i][j]=max(pick,not_pick)
+
+        return self.dp[i][j]
+
+    def tab(self, target):
+
+        n = len(self.nums)
+
+        self.dp = [[float('-inf')] * n for _ in range(n)]
+
+        # Base Case
+        for j in range(n):
+            self.dp[0][j] = 0
+
+        for i in range(1, n):
+
+            for j in range(n):
+
+                pick = float('-inf')
+                not_pick = float('-inf')
+
+                # Pick
+                if j < i and abs(self.nums[i] - self.nums[j]) <= target:
+
+                    if self.dp[j][j - 1] != float('-inf'):
+                        pick = 1 + self.dp[j][j - 1]
+
+                # Not Pick
+                if j - 1 >= 0:
+                    not_pick = self.dp[i][j - 1]
+
+                self.dp[i][j] = max(pick, not_pick)
+
+        return self.dp[n - 1][n - 1]
+
+    def maximumJumps(self, nums: List[int], target: int):
+
+        self.nums=nums
+
+        m=len(nums)-1
+
+        self.dp=[[None for _ in range(m+1)] for _ in range(m+1)]
+
+        # ans=self.rec(m,m-1,target)
+        # ans=self.memo(m,m-1,target)
+
+        ans=self.tab(target)
+
+        if ans==float('-inf'):
+            return -1
+
+        return ans
