@@ -1,0 +1,9 @@
+class Solution:
+    def isGood(self, nums: List[int]) -> bool:
+        maxi=max(nums)
+        rt=set(nums)
+        ct=nums.count(maxi)
+        n=len(nums)
+        if len(rt)+1==n and ct==2 and maxi+1==n:
+            return True
+        return False
