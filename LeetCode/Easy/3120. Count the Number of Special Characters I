@@ -1,0 +1,9 @@
+class Solution:
+    def numberOfSpecialChars(self, word: str) -> int:
+        dt=Counter(word);cnt=0;st=set()
+        for i in word:
+            x=chr(ord(i)+32)
+            if  x in dt and x not in st:
+                cnt+=1
+                st.add(x)
+        return cnt
