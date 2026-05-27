@@ -1,0 +1,40 @@
+class Solution:
+    def numberOfSpecialChars(self, word: str) -> int:
+        st = {}
+        ct = {}
+
+        for i, val in enumerate(word):
+
+            # lowercase letters
+            if 97 <= ord(val) <= 122:
+
+                if val not in st:
+                    st[val] = [i]
+                else:
+                    st[val].append(i)
+
+            # uppercase letters
+            else:
+
+                if val not in ct:
+                    ct[val] = [i]
+                else:
+                    ct[val].append(i)
+
+        cnt = 0
+
+        for key, val in st.items():
+
+            # convert lowercase to uppercase
+            x = chr(ord(key) - 32)
+
+            # check validity
+            if x in ct:
+
+                # first uppercase index
+                # should be after
+                # last lowercase index
+                if min(ct[x]) > max(val):
+                    cnt += 1
+
+        return cnt
