@@ -1,0 +1,23 @@
+class Solution:
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        ans=[]
+        n=len(nums)
+        if n==0:
+            return []
+        st=et=nums[0]
+        for i in range(1,n):
+            if abs(nums[i]-nums[i-1])!=1:
+                if st!=et:
+                    ans.append(f"{st}->{et}")
+                    st=et=nums[i]
+                else:
+                    ans.append(f"{st}")
+                    st=et=nums[i]
+            else:
+                et=nums[i]
+        if st!=et:
+            ans.append(f"{st}->{et}")
+        else:
+            ans.append(f"{st}")
+        # print(ans,st,et)
+        return ans
