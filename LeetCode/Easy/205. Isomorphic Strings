@@ -1,0 +1,17 @@
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        # dt=Counter(s);bt=Counter(t)
+        at=defaultdict()
+        if len(s)!=len(t):
+            return False
+        for i,val in enumerate(s):
+            if val in at:
+                if at[val]!=t[i]:
+                    return False
+            else:
+                if t[i] in at.values():
+                    return False
+                at[val]=t[i]
+
+        return True
+            
