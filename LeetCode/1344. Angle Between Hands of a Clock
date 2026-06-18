@@ -1,0 +1,13 @@
+class Solution:
+    def angleClock(self, hour: int, minutes: int) -> float:
+        ex_d=minutes*0.5
+        d_m=hour*5 if hour*5!=60 else 0
+        dif=abs(minutes-d_m)
+        if d_m>minutes:
+            res=dif*6+ex_d
+        else:
+            res=dif*6-ex_d
+        if 360-res<res:
+            return abs(360-res)
+        return abs(res)        
+        
