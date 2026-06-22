@@ -1,0 +1,8 @@
+class Solution:
+    def maxNumberOfBalloons(self, text: str) -> int:
+        mp=Counter(text)
+        if 'l' not in mp or 'b' not in mp or 'a' not in mp or 'o' not in mp or 'n' not in mp:
+            return 0
+        mp['l']=mp['l']//2
+        mp['o']=mp['o']//2
+        return min(mp['l'],mp['b'],mp['a'],mp['o'],mp['n'])
