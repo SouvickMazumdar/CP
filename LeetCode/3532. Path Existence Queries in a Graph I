@@ -1,0 +1,33 @@
+class Solution:
+    def pathExistenceQueries(self, n: int, nums: List[int], maxDiff: int, queries: List[List[int]]) -> List[bool]:
+        # ans=[]
+        # id_lt=[-1 for _ in range(n)]
+        # cl_lt=[]
+        # for s in range(n):
+        #     for e in range(s,n):
+        #         if abs(nums[s]-nums[e])<=maxDiff:
+        #             if id_lt[s]==-1 and id_lt[e]==-1:
+        #                 cl_lt.append({s,e})
+        #                 id_lt[s],id_lt[e]=len(cl_lt)-1, len(cl_lt)-1
+        #             elif id_lt[s]!=-1 and id_lt[e]==-1:
+        #                 id_lt[e]=id_lt[s]
+        #                 cl_lt[id_lt[s]].add(e)
+        #             elif id_lt[s]==-1 and id_lt[e]!=-1:
+        #                 id_lt[s]=id_lt[e]
+        #                 cl_lt[id_lt[e]].add(s)
+
+        # # print(cl_lt)
+        # # print(id_lt)
+        # for s,e in queries:
+        #     ans.append(id_lt[s]==id_lt[e] and id_lt[s]!=-1)
+        # return ans
+        id_lt=[0 for _ in range(n)]
+        for i in range(1,n):
+            id_lt[i]=id_lt[i-1]+(nums[i]-nums[i-1]>maxDiff)
+
+        ans=[]
+        for s,e in queries:
+            ans.append(id_lt[s]==id_lt[e])
+        return ans
+
+
