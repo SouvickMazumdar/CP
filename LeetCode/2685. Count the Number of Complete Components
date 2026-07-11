@@ -1,0 +1,23 @@
+from sortedcontainers import SortedList
+class Solution:
+    def countCompleteComponents(self, n: int, edges: List[List[int]]) -> int:
+        adj=defaultdict(SortedList)
+        lt=[-1]*n
+        for u,v in edges:
+            lt[u]=1
+            lt[v]=1
+            adj[u].add(v)
+            adj[v].add(u)
+        single=lt.count(-1)
+        for key,value in adj.items():
+            adj[key].add(key)
+        ft=defaultdict(list)
+        for key, value in adj.items():
+            nk = " ".join(map(str, value))
+            ft[nk].append(key)
+        ans=0
+        for key,value in ft.items():
+            st=key.count(' ')
+            if len(value)-1==st:
+                ans+=1
+        return ans+single
