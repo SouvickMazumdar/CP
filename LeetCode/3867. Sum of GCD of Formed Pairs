@@ -1,0 +1,12 @@
+class Solution:
+    def gcdSum(self, A: list[int]) -> int:
+        maxi=-1;gcd_l=[]
+        for i in A:
+            maxi=max(maxi,i)
+            gcd_l.append(math.gcd(i,maxi))
+        gcd_l.sort()
+        st_sum=[]
+        for i in range(len(gcd_l)//2):
+            st_sum.append(math.gcd(gcd_l[i],gcd_l[-1*(i+1)]))
+        return sum(st_sum)
+
