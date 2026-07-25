@@ -1,0 +1,11 @@
+class Solution:
+    def maxProduct(self, n: int) -> int:
+        n=str(n)
+        a=max(n)
+        idx=n.find(a)
+        n=n[:idx]+n[idx+1:]
+        b=max(n)
+        return int(a)*int(b)
+
+        
+        
