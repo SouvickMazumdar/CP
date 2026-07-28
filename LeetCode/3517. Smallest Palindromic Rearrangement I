@@ -1,0 +1,9 @@
+class Solution:
+    def smallestPalindrome(self, s: str) -> str:
+        n=len(s)
+        if n==1:
+            return s
+        first_h=s[:n//2]
+        first_h="".join(sorted(first_h))
+        sec_h=first_h[::-1]
+        return first_h+("" if (n&1)==0 else s[n//2])+sec_h
