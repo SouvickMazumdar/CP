@@ -1,0 +1,11 @@
+class Solution:
+    def minimumDeletions(self, nums: List[int]) -> int:
+        mini=min(nums);maxi=max(nums)
+        n=len(nums)
+        if n<=2:
+            return n
+        maxi_id=nums.index(maxi)
+        mini_id=nums.index(mini)
+        left=min(maxi_id,mini_id)
+        right=max(maxi_id,mini_id)
+        return min(right+1,n-left, left+1+n-right)
